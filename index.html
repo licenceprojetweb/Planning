@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Planning</title>
+	<script src="angular.min.js"></script>
+	<script src="app.js"></script>
+</head>
+<body data-ng-app="app">
+	<div data-ng-controller="Controleur">
+
+		<ul>
+			<li data-ng-repeat="elt in cours">Enseignant : {{elt.idEnseignant}} - Classe : {{elt.idClasse}} - Salle : {{elt.idSalle}} - Date : {{elt.date}} - Heure de debut : {{elt.heureDebut}} - Heure de fin : {{elt.heureFin}}</li>
+		</ul>
+
+		<table>
+			<tr>
+				<td></td>
+				<td scope="col">Lundi</td>
+				<td scope="col">Mardi</td>
+				<td scope="col">Mercredi</td>
+				<td scope="col">Jeudi</td>
+				<td scope="col">Vendredi</td>
+				<td scope="col">Samedi</td>
+				<td scope="col">Dimanche</td>
+			</tr>
+			<tr>
+				<td scope="row">9h - 10h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">10h - 11h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">11h - 12h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">12h - 13h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">13h - 14h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">14h - 15h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">15h - 16h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">16h - 17h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td scope="row">17h - 18h</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+
+		<form>
+			<div>
+				<label for="enseignant">Enseignant</label>
+				<input id="enseignant" data-ng-model="demande.enseignant">
+			</div>
+			<div>
+				<label for="classe">Classe</label>
+				<input id="classe" data-ng-model="demande.classe">
+			</div>
+			<div>
+				<label for="salle">Classe</label>
+				<input id="number" data-ng-model="demande.salle">
+			</div>
+			<div>
+				<label for="date">Date</label>
+				<input type="date" id="date" data-ng-model="demande.date">
+			</div>
+			<div>
+				<label for="heureDebut">Heure de début</label>
+				<input type="time" id="heureDebut" data-ng-model="demande.heureDebut">
+			</div>
+			<div>
+				<label for="heureFin">Heure de fin</label>
+				<input type="time" id="heureFin" data-ng-model="demande.heureFin">
+			</div>
+			<input type="submit" data-ng-click="ajout()">
+		</form>
+
+	</div>
+</body>
+</html>
