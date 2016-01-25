@@ -123,10 +123,12 @@
 			</div>
 			<div>
 				<label for="classe">Classe</label>
-				<input id="classe" data-ng-model="demande.classe">
+				<select id="classe" data-ng-model="demande.classe">
+					<option data-ng-repeat="elt in classe|orderBy:'nomClasse'">{{elt.nomClasse}}</option>
+				</select>
 			</div>
 			<div>
-				<label for="salle">Classe</label>
+				<label for="salle">Salle</label>
 				<input id="number" data-ng-model="demande.salle">
 			</div>
 			<div>
