@@ -8,10 +8,27 @@
 </head>
 <body data-ng-app="app">
 	<div data-ng-controller="Controleur">
-
-		<ul>
-			<li data-ng-repeat="elt in cours">Enseignant : {{elt.idEnseignant}} - Classe : {{elt.idClasse}} - Salle : {{elt.idSalle}} - Date : {{elt.date}} - Heure de debut : {{elt.heureDebut}} - Heure de fin : {{elt.heureFin}}</li>
-		</ul>
+		
+		<table>
+			<tr>
+				<td>Enseignant</td>
+				<td>Classe</td>
+				<td>Salle</td>
+				<td>Date</td>
+				<td>Heure de début</td>
+				<td>Heure de fin</td>
+				<td>Vidéo projecteur</td>
+			</tr>
+			<tr data-ng-repeat="elt in cours">
+				<td>{{elt.idEnseignant}}</td>
+				<td>{{elt.idClasse}}</td>
+				<td>{{elt.idSalle}}</td>
+				<td>{{elt.heureDebut.toLocaleDateString()}}</td>
+				<td>{{elt.heureDebut.toLocaleTimeString()}}</td>
+				<td>{{elt.heureFin.toLocaleTimeString()}}</td>
+				<td>{{elt.videoProjecteur}}</td>
+			</tr>
+		</table>
 
 		<table>
 			<tr>
@@ -124,7 +141,7 @@
 			<div>
 				<label for="classe">Classe</label>
 				<select id="classe" data-ng-model="demande.classe">
-					<option data-ng-repeat="elt in classe|orderBy:'nomClasse'">{{elt.nomClasse}}</option>
+					<option data-ng-repeat="elt in classe|orderBy:'nomClasse'" value="{{$index}}">{{elt.nomClasse}}</option>
 				</select>
 			</div>
 			<div>
@@ -133,15 +150,19 @@
 			</div>
 			<div>
 				<label for="date">Date</label>
-				<input type="date" id="date" data-ng-model="demande.date">
+				<input type="date" id="date" data-ng-model="demande.date" required>
 			</div>
 			<div>
 				<label for="heureDebut">Heure de début</label>
-				<input type="time" id="heureDebut" data-ng-model="demande.heureDebut">
+				<input type="time" id="heureDebut" data-ng-model="demande.heureDebut" required>
 			</div>
 			<div>
 				<label for="heureFin">Heure de fin</label>
-				<input type="time" id="heureFin" data-ng-model="demande.heureFin">
+				<input type="time" id="heureFin" data-ng-model="demande.heureFin" required>
+			</div>
+			<div>
+				<label for="videoProjecteur">Vidéo projecteur</label>
+				<input type="checkbox" id="videoProjecteur" data-ng-model="demande.videoProjecteur">
 			</div>
 			<input type="submit" data-ng-click="ajout()">
 		</form>
