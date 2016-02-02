@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Bienvenue</title>
+
+		<script src="angular-1.4.9/angular.min.js"></script>
+		<!-- permet au CSS de déterminer la résolution de l'écran en fonction du périphérique -->
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.css"> 
+		<link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<script src="bootstrap-3.2.0-dist/js/jquery-1.10.2.js"></script> 
+		<script src="bootstrap-3.2.0-dist/js/bootstrap.js"></script> 
+
+		<style>
+			body
+			{
+				font-size: 12px;
+				font-family: Arial;
+				padding-top: 70px;/* décalage pour le menu de navigation */
+			}
+		</style>
+		
+		<script>
+			var monApp = angular.module("monApp", []);
+			
+			monApp.controller("monController", ["$scope", "$http", function ($scope, $http)
+			{
+				$scope.saved = localStorage.getItem('data');				
+				if(localStorage.getItem('data')!==null)
+				{
+					$scope.todos=JSON.parse($scope.saved);
+				}
+				else
+				{
+					$scope.todos=[];
+					localStorage.setItem('data', JSON.stringify($scope.todos));
+				}
+				
+				$scope.ajouter = function() 
+				{
+					alert("addTodo");
+					
+					$scope.todos.push
+					({
+						heure: $scope.newHeure,
+						classe: $scope.newClasse, 
+						salle: $scope.newSalle, 
+						VP: $scope.newVP
+					});
+					
+					$scope.newHeure = ''; //clear the input after adding
+					$scope.newClasse = ''; //clear the input after adding
+					$scope.newSalle = ''; //clear the input after adding
+					$scope.newVP = ''; //clear the input after adding
+					
+					localStorage.setItem('data', JSON.stringify($scope.todos));
+				};
+
+				$scope.effacer=function (index) 
+				{	
+					alert("effacer");
+					localStorage.clear();
+				};
+			}]);
+		</script>
+	</head>
+
+	<body>
+		<div class="container" data-ng-app="monApp">     
+			<div class="row" data-ng-controller="monController"> 
+				<div class="col-xs-12 col-sm-10 col-md-6"> 
+					<div>
+						<form>
+							<label for="heure">Horraires</label> 
+							<select id="heure" data-ng-model="newHeure">
+								<option>Choisissez un horraire</option>
+								<option>7h00 - 8h00</option>
+								<option>8h00 - 9h00</option>
+								<option>9h00 - 10h00</option>
+								<option>10h00 - 11h00</option>
+								<option>11h00 - 12h00</option>
+								<option>12h00 - 13h00</option>
+								<option>13h00 - 14h00</option>
+								<option>14h00 - 15h00</option>
+								<option>15h00 - 16h00</option>
+								<option>16h00 - 17h00</option>
+								<option>17h00 - 18h00</option>
+								<option>18h00 - 19h00</option>
+								<option>19h00 - 20h00</option>
+							</select><br>
+							
+							<label for="classe">Classe</label> 
+							<input id="classe" type="text" data-ng-model="newClasse"><br>
+							
+							<label for="salle">Salle</label> 
+							<input id="salle" type="text" data-ng-model="newSalle"><br>
+							
+							<label for="VideoProjecteur">Vidéo Projecteur: </label> 
+							<select id="VideoProjecteur" data-ng-model="newVP">
+								<option>Shouaitez vous un vidéo projecteur</option>
+								<option>Oui</option>
+								<option>Non</option>
+							</select><br>
+
+							<input type="button" value="Ajouter" data-ng-click="ajouter()">
+							<input type="button" value="Effacer" data-ng-click="effacer()">
+						</form>
+					</div>
+					
+					<div id="erreur"></div>
+					<!-- exemple de tableaux 
+					table-bordered : ajoute des bordures 
+					table-striped : change l'arrière plan d'une ligne sur deux
+					table-hover : effet au survol de la ligne avec la souris
+					table-responsive : ajoute des barres défilment si nécessaire -->
+
+					<table class="table table-bordered table-striped table-hover">         
+						<!-- le titre du tableau -->
+						<thead> 
+							<tr class="success"> 
+								<td data-ng-click="">Heures</td> 
+								<td data-ng-click="">Classe</td> 
+								<td data-ng-click="">Salles</td> 
+								<td data-ng-click="">Vidéo Projecteur Réservé</td> 
+							</tr> 
+						</thead>
+
+						<!-- les éléments du tableau -->
+						<tbody> 
+							<tr data-ng-repeat="todo in todos track by $index"> 
+								<td>{{todo.heure}}</td> 
+								<td>{{todo.classe}}</td> 
+								<td>{{todo.salle}}</td> 
+								<td>{{todo.VP}}</td> 
+							</tr> 
+						</tbody> 
+					</table>
+				</div> 
+			</div> 
+		</div> 
+	</body>
+</html>
