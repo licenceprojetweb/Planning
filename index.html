@@ -139,17 +139,17 @@
 					<form>
 						<div>
 							<label for="enseignant">Enseignant</label>
-							<input id="enseignant" data-ng-model="demande.enseignant">
+							<input id="enseignant" data-ng-model="demande.enseignant" required>
 						</div>
 						<div>
 							<label for="classe">Classe</label>
-							<select id="classe" data-ng-model="demande.classe">
+							<select id="classe" data-ng-model="demande.classe" required>
 								<option data-ng-repeat="elt in classe|orderBy:'nomClasse'" value="{{$index}}">{{elt.nomClasse}}</option>
 							</select>
 						</div>
 						<div>
 							<label for="salle">Salle</label>
-							<input id="number" data-ng-model="demande.salle">
+							<input id="number" data-ng-model="demande.salle" required>
 						</div>
 						<div>
 							<label for="date">Date</label>
