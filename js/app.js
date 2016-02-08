@@ -3,7 +3,10 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$filter", function ($scope, $filter) {
 
     // Le code du contrôleur
+
+    // Nombre maximum de vidéos projecteurs
     $scope.videoProjecteur = 3;
+
     $scope.salles = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110];
     $scope.enseignants = [{
         'loginEnseignant': 'gchagnon',
@@ -94,13 +97,17 @@ app.controller("Controleur", ["$scope", "$filter", function ($scope, $filter) {
         // Détruire cette variable parce que c'est une variable globale pour éviter que d'autres fonctions s'en servent
         delete cours;
     }
+
+    $scope.deleteTrie = function () {
+        angular.element(document.getElementsByClassName('trie')).remove();
+    }
 }]);
 
 app.directive('trieAppear', function ($compile) {
     return function (scope, element, attrs) {
         element.bind("change", function () {
             if (scope.trieType) {
-                angular.element(document.getElementById('trie')).append($compile("<select><option>test</option></select>")(scope));
+                angular.element(document.getElementById('trie')).append($compile("<select class='trie'><option>test</option></select>")(scope));
             }
         });
     };
