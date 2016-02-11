@@ -154,7 +154,7 @@ app.directive('trieAppear', function ($compile) {
 app.filter('getEnseignantId', function () {
     return function (enseignants, login) {
         for (var i = 0; i < enseignants.length; i++) {
-            if (enseignants[i].loginEnseignant == login) {
+            if (enseignants[i].idEnseignant == login) {
                 return i;
             }
         }
@@ -165,7 +165,7 @@ app.filter('getEnseignantId', function () {
 app.filter('existeSalle', function () {
     return function (salles, num) {
         for (var i = 0; i < salles.length; i++) {
-            if (salles[i] == num) {
+            if (salles[i].idSalle == num) {
                 return true;
             }
         }
