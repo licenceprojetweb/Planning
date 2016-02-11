@@ -8,9 +8,9 @@
     <script src="js/app.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.css"> 
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<script src="bootstrap/js/jquery-1.10.2.js"></script> 
+	<script src="bootstrap/js/jquery-1.10.2.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 </head>
 
@@ -32,9 +32,9 @@
                         <td>{{enseignants[elt.idEnseignant].prenomEnseignant}} {{enseignants[elt.idEnseignant].nomEnseignant}}</td>
                         <td>{{classe[elt.idClasse].nomClasse}}</td>
                         <td>{{elt.idSalle}}</td>
-                        <td>{{elt.heureDebut.toLocaleDateString()}}</td>
-                        <td>{{elt.heureDebut.toLocaleTimeString()}}</td>
-                        <td>{{elt.heureFin.toLocaleTimeString()}}</td>
+                        <td>{{elt.date}}</td>
+                        <td>{{elt.heureDebut}}</td>
+                        <td>{{elt.heureFin}}</td>
                         <td>{{elt.videoProjecteur}}</td>
                     </tr>
                 </table>
@@ -163,7 +163,7 @@
                     </div>
                     <div>
                         <label for="salle">Salle</label>
-                        <input id="number" data-ng-model="demande.salle" required>
+                        <input id="salle" data-ng-model="demande.salle" required>
                     </div>
                     <div>
                         <label for="date">Date</label>

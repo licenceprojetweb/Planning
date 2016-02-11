@@ -3,18 +3,18 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
 
     // Le code du contrôleur
-	//localStorage.clear();
-	$scope.saved = localStorage.getItem('data');				
-	if(localStorage.getItem('data')!==null)
-	{
-		$scope.coursSave=JSON.parse($scope.saved);
-	}
-	else
-	{
-		$scope.coursSave=[];
-		localStorage.setItem('data', JSON.stringify($scope.coursSave));
-	}
-	console.log(localStorage.getItem('data'));
+    //localStorage.clear();
+    $scope.saved = localStorage.getItem('data');
+    if(localStorage.getItem('data')!==null)
+    {
+        $scope.coursSave=JSON.parse($scope.saved);
+    }
+    else
+    {
+        $scope.coursSave=[];
+        localStorage.setItem('data', JSON.stringify($scope.coursSave));
+    }
+    console.log(localStorage.getItem('data'));
     $scope.videoProjecteur = 3;
     $scope.salles = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110];
     $scope.enseignants = [{
@@ -34,7 +34,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         'prenomEnseignant': 'Mona',
         'nomEnseignant': 'Lisa'
     }];
-	
+
     $scope.classe = [{
         'nomClasse': 'Licence professionnelle Projet Web',
         'effectifClasse': 25
@@ -48,16 +48,16 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         'nomClasse': 'BTS SIO',
         'effectifClasse': 18
     }];
-	
+
     /*$scope.cours = [{
-        'idEnseignant': 0,
-        'idClasse': 0,
-        'idSalle': 100,
-        'heureDebut': 8,
-        'heureFin': 9,
-        'videoProjecteur': 1
-    }];*/
-    
+     'idEnseignant': 0,
+     'idClasse': 0,
+     'idSalle': 100,
+     'heureDebut': 8,
+     'heureFin': 9,
+     'videoProjecteur': 1
+     }];*/
+
     $scope.ajout = function () {
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
@@ -77,10 +77,11 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             alert("Les heures doivent être différentes.")
             return;
         }
-        
+
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
+
         // Formater la date dans les champs heureDebut et heureFin
         $scope.demande.heureDebut.setDate($scope.demande.date.getDate());
         $scope.demande.heureDebut.setMonth($scope.demande.date.getMonth());
@@ -89,15 +90,37 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.demande.heureFin.setMonth($scope.demande.date.getMonth());
         $scope.demande.heureFin.setFullYear($scope.demande.date.getFullYear());
 
+        date = new Date($scope.demande.date);
+        heureDebut = new Date ($scope.demande.heureDebut);
+        heureFin = new Date ($scope.demande.heureFin);
+
+        if (heureDebut.getHours() < 10) {
+            heureDebutFormat = "0"+heureDebut.getHours();
+        }
+
+        if (heureDebut.getMinutes() < 10){
+            minutesDebutFormat = "0"+heureDebut.getMinutes();
+        }
+
+
+        if (heureFin.getHours() < 10) {
+            heureFinFormat = "0"+heureFin.getHours();
+        }
+
+        if (heureFin.getMinutes() < 10){
+            minutesFinFormat = "0"+heureFin.getMinutes();
+        }
+
         // Créer le cours
         newCours = {
             'idEnseignant': idEnseignant,
             'idClasse': $scope.demande.classe,
             'idSalle': $scope.demande.salle,
-            'heureDebut': $scope.demande.heureDebut,
-            'heureFin': $scope.demande.heureFin,
-            'videoProjecteur': $scope.demande.videoProjecteur,
-        }
+            'date': date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear(),
+            'heureDebut': heureDebutFormat+":"+minutesDebutFormat,
+            'heureFin': heureFinFormat+":"+minutesFinFormat,
+            'videoProjecteur': $scope.demande.videoProjecteur
+        };
 
         // Voir si un cours n'a pas déjà été reservé dans la salle
         if (!$filter('existeCours')($scope.coursSave, $scope.videoProjecteur)) {
@@ -106,8 +129,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         // Envoyer les données dans le tableau
         $scope.coursSave.push(newCours);
-		localStorage.setItem('data', JSON.stringify($scope.coursSave));
-		console.log(localStorage.getItem('data'));
+        localStorage.setItem('data', JSON.stringify($scope.coursSave));
+        console.log(localStorage.getItem('data'));
 
         // Détruire cette variable parce que c'est une variable globale pour éviter que d'autres fonctions s'en servent
         delete newCours;
@@ -150,9 +173,9 @@ app.filter('existeCours', function () {
     return function (oldCours, maxVideoProjecteurs) {
         var numVideoProjecteur = 0;
         var message = "";
-		console.log(oldCours.length);
+        console.log(oldCours.length);
         for (var i = 0; i < oldCours.length; i++) {
-			console.log(oldCours[i].heureDebut);
+            console.log(oldCours[i].heureDebut);
             if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin) {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
