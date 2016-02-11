@@ -15,6 +15,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 		localStorage.setItem('data', JSON.stringify($scope.coursSave));
 	}
 	console.log(localStorage.getItem('data'));
+
+
     $scope.videoProjecteur = 3;
     $scope.salles = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110];
     $scope.enseignants = [{
