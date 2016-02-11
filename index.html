@@ -153,22 +153,17 @@
                 <form>
                     <div>
                         <label for="enseignant">Enseignant</label>
-                        <select id="enseignant" data-ng-model="demande.enseignant" required>
-                            <option data-ng-repeat="elt in enseignants|orderBy:'nomEnseignant'" value="{{elt.idEnseignant}}">{{elt.nomEnseignant}}</option>
-                        </select>
-
+                        <input id="enseignant" data-ng-model="demande.enseignant" required>
                     </div>
                     <div>
                         <label for="classe">Classe</label>
                         <select id="classe" data-ng-model="demande.classe" required>
-                            <option data-ng-repeat="elt in classe|orderBy:'nomClasse'" value="{{elt.idClasse}}">{{elt.nomClasse}}</option>
+                            <option data-ng-repeat="elt in classe|orderBy:'nomClasse'" value="{{$index}}">{{elt.nomClasse}}</option>
                         </select>
                     </div>
                     <div>
                         <label for="salle">Salle</label>
-                        <select id="salle" data-ng-model="demande.salle" required>
-                            <option data-ng-repeat="elt in salles|orderBy:'numeroSalle'" value="{{elt.idSalle}}">{{elt.numeroSalle}}</option>
-                        </select>
+                        <input id="number" data-ng-model="demande.salle" required>
                     </div>
                     <div>
                         <label for="date">Date</label>
