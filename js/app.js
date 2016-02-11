@@ -3,63 +3,88 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
 
     // Le code du contrôleur
-	//localStorage.clear();
-	$scope.saved = localStorage.getItem('data');				
-	if(localStorage.getItem('data')!==null)
-	{
-		$scope.coursSave=JSON.parse($scope.saved);
-	}
-	else
-	{
-		$scope.coursSave=[];
-		localStorage.setItem('data', JSON.stringify($scope.coursSave));
-	}
-	console.log(localStorage.getItem('data'));
+    //localStorage.clear();
+    $scope.saved = localStorage.getItem('data');
+    if(localStorage.getItem('data')!==null)
+    {
+        $scope.coursSave=JSON.parse($scope.saved);
+    }
+    else
+    {
+        $scope.coursSave=[];
+        localStorage.setItem('data', JSON.stringify($scope.coursSave));
+    }
+    console.log(localStorage.getItem('data'));
 
 
     $scope.videoProjecteur = 3;
-    $scope.salles = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110];
+    $scope.salles = [{
+        'idSalle':1,
+        'numeroSalle':101,
+        'effectifSalle':25
+
+    },
+    {
+        'idSalle':2,
+        'numeroSalle': 102,
+        'effectifSalle':25
+    },
+
+    {
+        'idSalle':3,
+        'numeroSalle': 103,
+        'effectifSalle':25
+    }
+    ];
     $scope.enseignants = [{
+        'idEnseignant':1,
         'loginEnseignant': 'gchagnon',
         'prenomEnseignant': 'Gilles',
         'nomEnseignant': 'Chagnon'
     }, {
+        'idEnseignant':2,
         'loginEnseignant': 'pnollet',
         'prenomEnseignant': 'Patrick',
         'nomEnseignant': 'Nollet'
     }, {
+        'idEnseignant':3,
         'loginEnseignant': 'fhollande',
         'prenomEnseignant': 'François',
         'nomEnseignant': 'Hollande'
     }, {
+        'idEnseignant':4,
         'loginEnseignant': 'mlisa',
         'prenomEnseignant': 'Mona',
         'nomEnseignant': 'Lisa'
     }];
-	
+
     $scope.classe = [{
+        'idClasse':1,
         'nomClasse': 'Licence professionnelle Projet Web',
         'effectifClasse': 25
     }, {
+        'idClasse':2,
         'nomClasse': 'Licence professionnelle ',
         'effectifClasse': 30
     }, {
+        'idClasse':3,
         'nomClasse': 'Licence Physique',
         'effectifClasse': 28
     }, {
+        'idClasse':4,
         'nomClasse': 'BTS SIO',
         'effectifClasse': 18
     }];
-	
+
     /*$scope.cours = [{
-        'idEnseignant': 0,
-        'idClasse': 0,
-        'idSalle': 100,
-        'heureDebut': 8,
-        'heureFin': 9,
-        'videoProjecteur': 1
-    }];*/
-    
+     'idEnseignant': 0,
+     'idClasse': 0,
+     'idSalle': 100,
+     'heureDebut': 8,
+     'heureFin': 9,
+     'videoProjecteur': 1
+     }];*/
+
     $scope.ajout = function () {
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
@@ -79,7 +104,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             alert("Les heures doivent être différentes.")
             return;
         }
-        
+
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
@@ -108,8 +133,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         // Envoyer les données dans le tableau
         $scope.coursSave.push(newCours);
-		localStorage.setItem('data', JSON.stringify($scope.coursSave));
-		console.log(localStorage.getItem('data'));
+        localStorage.setItem('data', JSON.stringify($scope.coursSave));
+        console.log(localStorage.getItem('data'));
 
         // Détruire cette variable parce que c'est une variable globale pour éviter que d'autres fonctions s'en servent
         delete newCours;
@@ -152,9 +177,9 @@ app.filter('existeCours', function () {
     return function (oldCours, maxVideoProjecteurs) {
         var numVideoProjecteur = 0;
         var message = "";
-		console.log(oldCours.length);
+        console.log(oldCours.length);
         for (var i = 0; i < oldCours.length; i++) {
-			console.log(oldCours[i].heureDebut);
+            console.log(oldCours[i].heureDebut);
             if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin) {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
