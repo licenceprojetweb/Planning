@@ -58,6 +58,15 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
      'videoProjecteur': 1
      }];*/
 
+     // Différents tries disponibles
+    $scope.trieOptions = [
+      {name:"", value:0},
+      {name:"Professeur", value:1},
+      {name:"Classe", value:2}
+    ];
+    // Mettre la <select> à une valeur par défaut
+    $scope.trieType = $scope.trieOptions[0].value;
+
     $scope.ajout = function () {
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
@@ -90,25 +99,30 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.demande.heureFin.setMonth($scope.demande.date.getMonth());
         $scope.demande.heureFin.setFullYear($scope.demande.date.getFullYear());
 
-        date = new Date($scope.demande.date);
-        heureDebut = new Date ($scope.demande.heureDebut);
-        heureFin = new Date ($scope.demande.heureFin);
+        var date = new Date($scope.demande.date);
+        var heureDebut = new Date ($scope.demande.heureDebut);
+        var heureFin = new Date ($scope.demande.heureFin);
 
+        console.log(heureDebut.getHours());
+        var heureDebutFormat = heureDebut.getHours();
         if (heureDebut.getHours() < 10) {
-            heureDebutFormat = "0"+heureDebut.getHours();
+            heureDebutFormat = "0"+heureDebutFormat;
         }
 
+        var minutesDebutFormat = heureDebut.getMinutes();
         if (heureDebut.getMinutes() < 10){
-            minutesDebutFormat = "0"+heureDebut.getMinutes();
+            minutesDebutFormat = "0"+minutesDebutFormat;
         }
 
 
+        var heureFinFormat = heureFin.getHours();
         if (heureFin.getHours() < 10) {
-            heureFinFormat = "0"+heureFin.getHours();
+            heureFinFormat = "0"+heureFinFormat;
         }
 
+        var minutesFinFormat = heureFin.getMinutes();
         if (heureFin.getMinutes() < 10){
-            minutesFinFormat = "0"+heureFin.getMinutes();
+            minutesFinFormat = "0"+minutesFinFormat;
         }
 
         // Créer le cours
@@ -137,14 +151,31 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
 }]);
 
+// Directive pour faire apparaitre le trie par professeur ou par classe
 app.directive('trieAppear', function ($compile) {
     return function (scope, element, attrs) {
         element.bind("change", function () {
-            if (scope.trieType) {
-                angular.element(document.getElementById('trie')).append($compile("<select><option>test</option></select>")(scope));
+            // Si on sélectionne la case vide, supprimer les anciens tries
+            if (scope.trieType == 0) {
+              angular.element(document.getElementsByClassName('trie')).remove();
+            }
+            else {
+                // Supprimer les anciens tries
+              angular.element(document.getElementsByClassName('trie')).remove();
+              var template;
+              // Si c'est 1, on a choisi professeur
+              if (scope.trieType == 1) {
+                template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in enseignants' value='{{$index}}'>{{elt.prenomEnseignant}} {{elt.nomEnseignant}}</option></select>";
+              }
+              // Si c'est 2, on a choisi classe
+              else if (scope.trieType == 2) {
+                template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in classe' value='{{$index}}'>{{elt.nomClasse}}</option></select>";
+              }
+              // Faire apparaître la nouvelle <select> après la première
+              element.parent().append($compile(template)(scope));
             }
         });
-    };
+      }
 });
 
 app.filter('getEnseignantId', function () {

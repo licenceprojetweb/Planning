@@ -38,14 +38,14 @@
                         <td>{{elt.videoProjecteur}}</td>
                     </tr>
                 </table>
-<!--
+
                 <div id="trie">
                     <label for="trieType">Trier par</label>
-                    <select id="trieType" data-ng-model="trieType" trie-appear>
-                        <option value="1">Professeur</option>
-                        <option value="2">Classe</option>
+                    <select id="trieType" data-ng-model="trieType" data-ng-options='option.value as option.name for option in trieOptions' trie-appear>
                     </select>
                 </div>
+
+<!--
 
                 <table>
                     <tr>
