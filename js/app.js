@@ -256,16 +256,3 @@ app.filter('existeCours', function () {
         return true;
     }
 });
-
-app.filter("parHeureDebut", function () {
-    return function (entree, heure) {
-        var sortie=[];
-
-        for (var i=0;i<entree.length;i++)
-            {
-                if (heure == entree[i].heureDebut) sortie.push(entree[i]);
-            }
-
-        return sortie;
-    }
-});
