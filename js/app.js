@@ -14,6 +14,26 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.coursSave=[];
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
     }
+
+    // Mettre la date du jour pour voir l'emploi du temps du jour
+    $scope.trieDate = new Date("2016-01-01");
+
+    // Convertir les dates en format de $scope.coursSave texte en objet Date pour que les comparaisons soient plus faciles
+    var dateTmp;
+    for(var i=0; i<$scope.coursSave.length; i++) {
+        dateTmp = $scope.coursSave[i].date.split("/");
+        if(dateTmp[1] < 10) {
+            dateTmp[1] = "0" + dateTmp[1];
+        }
+        if(dateTmp[0] < 10) {
+            dateTmp[0] = "0" + dateTmp[0];
+        }
+        // Mettre la date temporaire au format Date dans une ligne du tableau
+        // Cette varialbe dateTmp sera supprimée avant l'enregistrement de $scope.coursSave
+        $scope.coursSave[i].dateTmp = new Date(dateTmp[2] + "-" + dateTmp[1] + "-" + dateTmp[0]);
+    }
+    delete dateTmp; // Surpprimer la variable temporaire
+
     console.log(localStorage.getItem('data'));
     $scope.videoProjecteur = 3;
     $scope.salles = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110];
@@ -99,11 +119,14 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.demande.heureFin.setMonth($scope.demande.date.getMonth());
         $scope.demande.heureFin.setFullYear($scope.demande.date.getFullYear());
 
+        console.log($scope.demande.heureDebut);
+
         var date = new Date($scope.demande.date);
         var heureDebut = new Date ($scope.demande.heureDebut);
         var heureFin = new Date ($scope.demande.heureFin);
 
         console.log(heureDebut.getHours());
+        console.log(heureFin.getHours());
         var heureDebutFormat = heureDebut.getHours();
         if (heureDebut.getHours() < 10) {
             heureDebutFormat = "0"+heureDebutFormat;
@@ -113,7 +136,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         if (heureDebut.getMinutes() < 10){
             minutesDebutFormat = "0"+minutesDebutFormat;
         }
-
 
         var heureFinFormat = heureFin.getHours();
         if (heureFin.getHours() < 10) {
@@ -130,7 +152,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             'idEnseignant': idEnseignant,
             'idClasse': $scope.demande.classe,
             'idSalle': $scope.demande.salle,
-            'date': date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear(),
+            'date': date.getDate()+"/"+parseInt(date.getMonth()+1)+"/"+date.getFullYear(),
             'heureDebut': heureDebutFormat+":"+minutesDebutFormat,
             'heureFin': heureFinFormat+":"+minutesFinFormat,
             'videoProjecteur': $scope.demande.videoProjecteur
@@ -143,6 +165,9 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         // Envoyer les données dans le tableau
         $scope.coursSave.push(newCours);
+        for(var i=0; i<$scope.coursSave.length; i++) {
+            $scope.coursSave[i].dateTmp = undefined;
+        }
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
         console.log(localStorage.getItem('data'));
 
@@ -229,5 +254,18 @@ app.filter('existeCours', function () {
         }
         if (message) alert(message);
         return true;
+    }
+});
+
+app.filter("parHeureDebut", function () {
+    return function (entree, heure) {
+        var sortie=[];
+
+        for (var i=0;i<entree.length;i++)
+            {
+                if (heure == entree[i].heureDebut) sortie.push(entree[i]);
+            }
+
+        return sortie;
     }
 });

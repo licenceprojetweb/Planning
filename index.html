@@ -40,12 +40,13 @@
                 </table>
 
                 <div id="trie">
+                    <label for="trieDate"></label>
+                    <input type="date" id="trieDate" data-ng-model="trieDate">
                     <label for="trieType">Trier par</label>
                     <select id="trieType" data-ng-model="trieType" data-ng-options='option.value as option.name for option in trieOptions' trie-appear>
                     </select>
                 </div>
 
-<!--
 
                 <table>
                     <tr>
@@ -60,95 +61,221 @@
                     </tr>
                     <tr>
                         <td scope="row">9h - 10h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='09:00' && a.heureFin>='10:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='09:00' && a.heureFin>='10:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='09:00' && a.heureFin>='10:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='09:00' && a.heureFin>='10:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='09:00' && a.heureFin>='10:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='09:00' && a.heureFin>='10:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='09:00' && a.heureFin>='10:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">10h - 11h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='10:00' && a.heureFin>='11:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='10:00' && a.heureFin>='11:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='10:00' && a.heureFin>='11:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='10:00' && a.heureFin>='11:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='10:00' && a.heureFin>='11:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='10:00' && a.heureFin>='11:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='10:00' && a.heureFin>='11:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">11h - 12h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='11:00' && a.heureFin>='12:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='11:00' && a.heureFin>='12:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='11:00' && a.heureFin>='12:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='11:00' && a.heureFin>='12:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='11:00' && a.heureFin>='12:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='11:00' && a.heureFin>='12:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='11:00' && a.heureFin>='12:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">12h - 13h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='12:00' && a.heureFin>='13:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='12:00' && a.heureFin>='13:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='12:00' && a.heureFin>='13:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='12:00' && a.heureFin>='13:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='12:00' && a.heureFin>='13:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='12:00' && a.heureFin>='13:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='12:00' && a.heureFin>='13:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">13h - 14h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='13:00' && a.heureFin>='14:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='13:00' && a.heureFin>='14:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='13:00' && a.heureFin>='14:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='13:00' && a.heureFin>='14:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='13:00' && a.heureFin>='14:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='13:00' && a.heureFin>='14:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='13:00' && a.heureFin>='14:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">14h - 15h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='14:00' && a.heureFin>='15:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='14:00' && a.heureFin>='15:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='14:00' && a.heureFin>='15:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='14:00' && a.heureFin>='15:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='14:00' && a.heureFin>='15:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='14:00' && a.heureFin>='15:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='14:00' && a.heureFin>='15:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">15h - 16h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='15:00' && a.heureFin>='16:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='15:00' && a.heureFin>='16:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='15:00' && a.heureFin>='16:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='15:00' && a.heureFin>='16:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='15:00' && a.heureFin>='16:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='15:00' && a.heureFin>='16:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='15:00' && a.heureFin>='16:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">16h - 17h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='16:00' && a.heureFin>='17:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='16:00' && a.heureFin>='17:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='16:00' && a.heureFin>='17:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='16:00' && a.heureFin>='17:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='16:00' && a.heureFin>='17:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='16:00' && a.heureFin>='17:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='16:00' && a.heureFin>='17:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td scope="row">17h - 18h</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='17:00' && a.heureFin>='18:00' && a.dateTmp.getDay() == 1 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='17:00' && a.heureFin>='18:00' && a.dateTmp.getDay() == 2 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='17:00' && a.heureFin>='18:00' && a.dateTmp.getDay() == 3 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='17:00' && a.heureFin>='18:00' && a.dateTmp.getDay() == 4 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='17:00' && a.heureFin>='18:00' && a.dateTmp.getDay() == 5 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='17:00' && a.heureFin>='18:00' && a.dateTmp.getDay() == 6 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
+                        <td>
+                            <p data-ng-repeat="a in coursSave" data-ng-show="a.heureDebut<='17:00' && a.heureFin>='18:00' && a.dateTmp.getDay() == 7 &&  a.dateTmp.getTime() == trieDate.getTime()">{{ enseignants[a.idEnseignant].prenomEnseignant }} {{ a.idSalle }}</p>
+                        </td>
                     </tr>
-                </table>-->
+                </table>
 
                 <form>
                     <div>
