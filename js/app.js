@@ -78,18 +78,17 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
      'videoProjecteur': 1
      }];*/
 
-     // Différents tries disponibles
+    // Différents tries disponibles
     $scope.trieOptions = [
-      {name:"", value:0},
-      {name:"Professeur", value:1},
-      {name:"Classe", value:2}
+        {name:"", value:0},
+        {name:"Professeur", value:1},
+        {name:"Classe", value:2}
     ];
     // Mettre la <select> à une valeur par défaut
     $scope.trieType = $scope.trieOptions[0].value;
 
     $scope.ajout = function () {
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
-
 
         // Si on veut un retro projecteur
         if ($scope.demande.videoProjecteur)
@@ -131,14 +130,18 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             return;
         }
 
-        if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
-
-        if($scope.demande.heureDebut < $scope.demande.heureFin)
-        {
-            alert("L'heure de début du cours est inférieur à la date de fin du cours");
+        if ($scope.demande.heureDebut.getTime() == $scope.demande.heureFin.getTime()) {
+            alert("Les heures doivent être différentes.");
             return;
         }
 
+        if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
+
+        if($scope.demande.heureDebut > $scope.demande.heureFin)
+        {
+            alert("L'heure de début du cours est supérieur à la date de fin du cours");
+            return;
+        }
 
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
@@ -182,13 +185,12 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         // Ajout d'un mois pour affichage
         date.setMonth(date.getMonth()+1);
 
-
         // Créer le cours
         newCours = {
             'idEnseignant': idEnseignant,
             'idClasse': $scope.demande.classe,
             'idSalle': $scope.demande.salle,
-            'date': date.getDate()+"/"+parseInt(date.getMonth()+1)+"/"+date.getFullYear(),
+            'date': date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear(),
             'heureDebut': heureDebutFormat+":"+minutesDebutFormat,
             'heureFin': heureFinFormat+":"+minutesFinFormat,
             'videoProjecteur': $scope.demande.videoProjecteur
@@ -218,25 +220,25 @@ app.directive('trieAppear', function ($compile) {
         element.bind("change", function () {
             // Si on sélectionne la case vide, supprimer les anciens tries
             if (scope.trieType == 0) {
-              angular.element(document.getElementsByClassName('trie')).remove();
+                angular.element(document.getElementsByClassName('trie')).remove();
             }
             else {
                 // Supprimer les anciens tries
-              angular.element(document.getElementsByClassName('trie')).remove();
-              var template;
-              // Si c'est 1, on a choisi professeur
-              if (scope.trieType == 1) {
-                template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in enseignants' value='{{$index}}'>{{elt.prenomEnseignant}} {{elt.nomEnseignant}}</option></select>";
-              }
-              // Si c'est 2, on a choisi classe
-              else if (scope.trieType == 2) {
-                template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in classe' value='{{$index}}'>{{elt.nomClasse}}</option></select>";
-              }
-              // Faire apparaître la nouvelle <select> après la première
-              element.parent().append($compile(template)(scope));
+                angular.element(document.getElementsByClassName('trie')).remove();
+                var template;
+                // Si c'est 1, on a choisi professeur
+                if (scope.trieType == 1) {
+                    template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in enseignants' value='{{$index}}'>{{elt.prenomEnseignant}} {{elt.nomEnseignant}}</option></select>";
+                }
+                // Si c'est 2, on a choisi classe
+                else if (scope.trieType == 2) {
+                    template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in classe' value='{{$index}}'>{{elt.nomClasse}}</option></select>";
+                }
+                // Faire apparaître la nouvelle <select> après la première
+                element.parent().append($compile(template)(scope));
             }
         });
-      }
+    }
 });
 
 app.filter('getEnseignantId', function () {
@@ -267,8 +269,8 @@ app.filter('existeCours', function () {
         var message = "";
         console.log(oldCours.length);
         for (var i = 0; i < oldCours.length; i++) {
-            console.log(oldCours[i].heureDebut);
-            if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin) {
+            oldCours[i].date = new Date(oldCours[i].date);
+            if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin && oldCours[i].date.getDate()+"/"+parseInt(oldCours[i].date.getMonth(),1)+"/"+oldCours[i].date.getFullYear() == newCours.date) {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
                     if (numVideoProjecteur >= maxVideoProjecteurs) {
