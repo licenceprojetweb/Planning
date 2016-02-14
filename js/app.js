@@ -16,7 +16,11 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
 
     // Mettre la date du jour pour voir l'emploi du temps du jour
-    $scope.trieDate = new Date("2016-01-01");
+    var tmpDateToday = new Date();
+    // Si on fait directement new Date(), on aura une date comme "2016-02-14T14:06:25.869Z" alors qu'on veut juste "2016-02-14T00:00:00.000Z"
+    // C'est pourquoi on refait un new Date en précisant bien l'année, le mois et le jour pour n'avoir que ce qu'on veut
+    $scope.trieDate = new Date(tmpDateToday.getFullYear() + "-" + ('0' + parseInt(tmpDateToday.getMonth()+1)).slice(-2) + "-" + tmpDateToday.getDate());
+    delete tmpDateToday; // Détruire la variable qui ne sert plus à rien
 
     // Convertir les dates en format de $scope.coursSave texte en objet Date pour que les comparaisons soient plus faciles
     var dateTmp;
