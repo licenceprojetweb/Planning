@@ -90,6 +90,30 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     $scope.ajout = function () {
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
+
+        // Si on veut un retro projecteur
+        if ($scope.demande.videoProjecteur)
+        {
+            // Si le nombre de projecteur est à 0
+            if($scope.videoProjecteur < 1)
+            {
+                // On sort
+                alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout")
+                return;
+            }
+            else
+            {
+                // Sinon on enlève un projecteur
+                $scope.videoProjecteur = $scope.videoProjecteur -1;
+                videoprojecteur = "Oui";
+            }
+        }
+        else
+        {
+            videoprojecteur = "Non";
+        }
+
+
         // Si il manque des champs, arrêter la fonction ici
         if (idEnseignant <= -1) {
             alert("Le login de l'enseignant n'est pas valide.");
@@ -108,6 +132,14 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         }
 
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
+
+        if($scope.demande.heureDebut < $scope.demande.heureFin)
+        {
+            alert("L'heure de début du cours est inférieur à la date de fin du cours");
+            return;
+        }
+
+
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
 
@@ -146,6 +178,10 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         if (heureFin.getMinutes() < 10){
             minutesFinFormat = "0"+minutesFinFormat;
         }
+
+        // Ajout d'un mois pour affichage
+        date.setMonth(date.getMonth()+1);
+
 
         // Créer le cours
         newCours = {
