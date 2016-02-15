@@ -140,11 +140,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             return;
         }
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
-        if($scope.demande.heureDebut > $scope.demande.heureFin)
-        {
-            alert("L'heure de début du cours est supérieur à la date de fin du cours");
-            return;
-        }
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
 
@@ -155,6 +150,12 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.demande.heureFin.setDate($scope.demande.date.getDate());
         $scope.demande.heureFin.setMonth($scope.demande.date.getMonth());
         $scope.demande.heureFin.setFullYear($scope.demande.date.getFullYear());
+
+        if($scope.demande.heureDebut > $scope.demande.heureFin)
+        {
+            alert("L'heure de début du cours est supérieur à la date de fin du cours");
+            return;
+        }
 
         console.log($scope.demande.heureDebut);
 
