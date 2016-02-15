@@ -122,7 +122,7 @@
                     <div>
                         <label for="classe">Classe</label>
                         <select id="classe" data-ng-model="demande.classe" required>
-                            <option data-ng-repeat="elt in classe|orderBy:'nomClasse'" value="{{$index}}">{{elt.nomClasse}}</option>
+                            <option data-ng-repeat="elt in classe" value="{{$index}}">{{elt.nomClasse}}</option>
                         </select>
                     </div>
                     <div>
@@ -151,3 +151,4 @@
         </div>
     </div>
 </body>
+</html>

@@ -3,7 +3,7 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
 
     // Le code du contrôleur
-    localStorage.clear();
+    //localStorage.clear();
     $scope.saved = localStorage.getItem('data');
     if(localStorage.getItem('data')!==null)
     {
@@ -100,7 +100,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         if ($scope.demande.videoProjecteur)
         {
             // Si le nombre de projecteur est à 0
-            if($scope.videoProjecteur < 1)
+            if($scope.videoProjecteur == 0)
             {
                 // On sort
                 alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout")
