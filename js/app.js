@@ -3,7 +3,7 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
 
     // Le code du contrôleur
-    //localStorage.clear();
+    // localStorage.clear();
     $scope.saved = localStorage.getItem('data');
     if(localStorage.getItem('data')!==null)
     {
@@ -15,8 +15,14 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
     }
 
+    // Si on fait directement new Date(), on aura une date comme "2016-02-14T14:06:25.869Z" alors qu'on veut juste "2016-02-14T00:00:00.000Z"
+    // C'est pourquoi on fait un new Date en précisant bien l'année, le mois et le jour pour n'avoir que ce qu'on veut
+    $scope.formatDate = function(date) {
+        return new Date(date.getFullYear() + "-" + ('0' + parseInt(date.getMonth()+1)).slice(-2) + "-" + ('0' + date.getDate()).slice(-2));
+    }
+
     // Mettre la date du jour pour voir l'emploi du temps du jour
-    $scope.trieDate = new Date("2016-01-01");
+    $scope.trieDate = $scope.formatDate(new Date());
 
     // Convertir les dates en format de $scope.coursSave texte en objet Date pour que les comparaisons soient plus faciles
     var dateTmp;
@@ -88,6 +94,22 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     $scope.trieType = $scope.trieOptions[0].value;
 
     $scope.ajout = function () {
+
+        dateactuelle = new Date();
+        var date = new Date($scope.demande.date);
+
+        if(date < dateactuelle)
+        {
+            alert("La date renseignée doit être égale ou supérieur à la date actuelle");
+            return;
+        }
+
+        if(date.getHours() < 9 || date.getHours() > 18)
+        {
+            alert("Les horaires indiquées ne sont pas paramétrés pour des cours");
+            return;
+        }
+
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
         // Si on veut un retro projecteur
@@ -112,7 +134,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             videoprojecteur = "Non";
         }
 
-
         // Si il manque des champs, arrêter la fonction ici
         if (idEnseignant <= -1) {
             alert("Le login de l'enseignant n'est pas valide.");
@@ -134,15 +155,12 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             alert("Les heures doivent être différentes.");
             return;
         }
-
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
-
         if($scope.demande.heureDebut > $scope.demande.heureFin)
         {
             alert("L'heure de début du cours est supérieur à la date de fin du cours");
             return;
         }
-
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
 
@@ -156,12 +174,12 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         console.log($scope.demande.heureDebut);
 
-        var date = new Date($scope.demande.date);
         var heureDebut = new Date ($scope.demande.heureDebut);
         var heureFin = new Date ($scope.demande.heureFin);
 
         console.log(heureDebut.getHours());
         console.log(heureFin.getHours());
+
         var heureDebutFormat = heureDebut.getHours();
         if (heureDebut.getHours() < 10) {
             heureDebutFormat = "0"+heureDebutFormat;
@@ -184,7 +202,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         // Ajout d'un mois pour affichage
         date.setMonth(date.getMonth()+1);
-
         // Créer le cours
         newCours = {
             'idEnseignant': idEnseignant,
@@ -193,7 +210,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             'date': date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear(),
             'heureDebut': heureDebutFormat+":"+minutesDebutFormat,
             'heureFin': heureFinFormat+":"+minutesFinFormat,
-            'videoProjecteur': $scope.demande.videoProjecteur
+            'videoProjecteur': $scope.demande.videoProjecteur,
+            'dateTmp': $scope.formatDate($scope.demande.date)
         };
 
         // Voir si un cours n'a pas déjà été reservé dans la salle
@@ -203,14 +221,30 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         // Envoyer les données dans le tableau
         $scope.coursSave.push(newCours);
-        for(var i=0; i<$scope.coursSave.length; i++) {
-            $scope.coursSave[i].dateTmp = undefined;
-        }
+        /*for(var i=0; i<$scope.coursSave.length; i++) {
+         $scope.coursSave[i].dateTmp = undefined;
+         }*/
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
         console.log(localStorage.getItem('data'));
 
         // Détruire cette variable parce que c'est une variable globale pour éviter que d'autres fonctions s'en servent
         delete newCours;
+    }
+
+    // Obtenir le numéro de la semaine en fonction d'une date
+    $scope.getWeekNumber = function(d) {
+        // Copier la date pour ne pas modifier l'original
+        d = new Date(+d);
+        d.setHours(0,0,0);
+        // Set to nearest Thursday: current date + 4 - current day number
+        // Make Sunday's day number 7
+        d.setDate(d.getDate() + 4 - (d.getDay()||7));
+        // Get first day of year
+        var yearStart = new Date(d.getFullYear(),0,1);
+        // Calculate full weeks to nearest Thursday
+        var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+        // Retourner le numéro de semaine
+        return weekNo;
     }
 }]);
 
@@ -230,10 +264,12 @@ app.directive('trieAppear', function ($compile) {
                 if (scope.trieType == 1) {
                     template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in enseignants' value='{{$index}}'>{{elt.prenomEnseignant}} {{elt.nomEnseignant}}</option></select>";
                 }
+
                 // Si c'est 2, on a choisi classe
                 else if (scope.trieType == 2) {
                     template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in classe' value='{{$index}}'>{{elt.nomClasse}}</option></select>";
                 }
+
                 // Faire apparaître la nouvelle <select> après la première
                 element.parent().append($compile(template)(scope));
             }
@@ -270,7 +306,8 @@ app.filter('existeCours', function () {
         console.log(oldCours.length);
         for (var i = 0; i < oldCours.length; i++) {
             oldCours[i].date = new Date(oldCours[i].date);
-            if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin && oldCours[i].date.getDate()+"/"+parseInt(oldCours[i].date.getMonth(),1)+"/"+oldCours[i].date.getFullYear() == newCours.date) {
+
+            if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin && oldCours[i].dateTmp.getTime() == newCours.dateTmp.getTime()) {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
                     if (numVideoProjecteur >= maxVideoProjecteurs) {
@@ -279,13 +316,13 @@ app.filter('existeCours', function () {
                     }
                 }
                 if (oldCours[i].idSalle == newCours.idSalle) {
-                    alert(message + "La salle est déjà réservée.")
+                    alert(message + "La salle est déjà réservée.");
                     return false;
                 } else if (oldCours[i].idEnseignant == newCours.idEnseignant) {
-                    alert(message + "L'enseignant a déjà cours à cette heure là.")
+                    alert(message + "L'enseignant a déjà cours à cette heure là.");
                     return false;
                 } else if (oldCours[i].idClasse == newCours.idClasse) {
-                    alert(message + "Cette classe a déjà cours à cette heure là.")
+                    alert(message + "Cette classe a déjà cours à cette heure là.");
                     return false;
                 }
             }
