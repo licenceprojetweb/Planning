@@ -1,177 +1,343 @@
 <!DOCTYPE html>
 <html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-<head>
-    <meta charset="utf-8">
-    <title>Planning</title>
-    <script src="js/angular.min.js"></script>
-    <script src="js/app.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <script src="bootstrap/js/jquery-1.10.2.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
-</head>
+		<title>Planning</title>
 
-<body data-ng-app="app">
-<div class="container" data-ng-controller="Controleur">
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-md-6">
-            <table class="table table-bordered table-striped">
-                <tr class="success">
-                    <td>Enseignant</td>
-                    <td>Classe</td>
-                    <td>Salle</td>
-                    <td>Date</td>
-                    <td>Heure de début</td>
-                    <td>Heure de fin</td>
-                    <td>Vidéo projecteur</td>
-                </tr>
-                <tr data-ng-repeat="elt in coursSave track by $index">
-                    <td>{{enseignants[elt.idEnseignant].prenomEnseignant}} {{enseignants[elt.idEnseignant].nomEnseignant}}</td>
-                    <td>{{classe[elt.idClasse].nomClasse}}</td>
-                    <td>{{elt.idSalle}}</td>
-                    <td>{{elt.date}}</td>
-                    <td>{{elt.heureDebut}}</td>
-                    <td>{{elt.heureFin}}</td>
-                    <td>{{elt.videoProjecteur}}</td>
-                </tr>
-            </table>
+		<script src="js/angular.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="bootstrap/js/jquery-1.10.2.js"></script>
+		<script src="bootstrap/js/bootstrap.js"></script>
 
-            <div id="trie">
-                <label for="trieDate"></label>
-                <input type="date" id="trieDate" data-ng-model="trieDate">
-                <label for="trieType">Trier par</label>
-                <select id="trieType" data-ng-model="trieType" data-ng-options='option.value as option.name for option in trieOptions' trie-appear>
-                </select>
-            </div>
+		<link rel="stylesheet" href="css/form-elements.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link href="css/clean-blog.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	</head>
 
-            <table class="table table-bordered table-striped">
-                <tr>
-                    <td></td>
-                    <td scope="col">Lundi</td>
-                    <td scope="col">Mardi</td>
-                    <td scope="col">Mercredi</td>
-                    <td scope="col">Jeudi</td>
-                    <td scope="col">Vendredi</td>
-                    <td scope="col">Samedi</td>
-                    <td scope="col">Dimanche</td>
-                </tr>
-                <tr>
-                    <td scope="row">9h - 10h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='09:00' && b.heureFin>='10:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">10h - 11h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='10:00' && b.heureFin>='11:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">11h - 12h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='11:00' && b.heureFin>='12:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">12h - 13h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='12:00' && b.heureFin>='13:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">13h - 14h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='13:00' && b.heureFin>='14:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">14h - 15h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='14:00' && b.heureFin>='15:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">15h - 16h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='15:00' && b.heureFin>='16:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">16h - 17h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='16:00' && b.heureFin>='17:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row">17h - 18h</td>
-                    <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='17:00' && b.heureFin>='18:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
-                    </td>
-                </tr>
-            </table>
+	<body data-ng-app="app">
+		<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Planning</a>
+			</div>
+			<div class="container-fluid">				
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="index.html">Calendrier</a>
+						</li>
+						<li>
+							<a href="prof.html">Ajouter Enseignants</a>
+						</li>
+						<li>
+							<a href="salles.html">Ajouter Salles</a>
+						</li>
+						<li>
+							<a href="classe.html">Ajouter Classes</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<header class="intro-header" style="background-image: url('img/home2-bg.jpg')">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<div class="site-heading">
+							<h1 class="contour">Planning De Cours</h1>
+							<hr class="small">
+							<span class="subheading contour">Réalisé par Florent, Killian et Romain</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<div class="container" data-ng-controller="Controleur">
+			<div class="row">
+				<div class="col-sm-5">                        	
+					<div class="form-box">
+						<div class="form-bottom">
+							<form role="form" action="" method="post" class="login-form">
+								<div class="form-group">
+									<label class="sr-only" for="enseignant">Enseignant</label>
+									<input type="text" placeholder="Enseignant" class="form-username form-control" id="enseignant" data-ng-model="demande.enseignant" required>
+								</div>
+								
+								<div class="form-group">
+									<label for="classe">Classes</label>
+									<select id="classe" class="form-password form-control" data-ng-model="demande.classe" required>
+									<option data-ng-repeat="elt in classe" value="{{$index}}">{{elt.nomClasse}}</option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label  class="sr-only" for="salle">Salle</label>
+									<input type="text" id="salle" placeholder="Salle"  class="form-username form-control" data-ng-model="demande.salle" required>
+								</div>
+								
+								<div class="form-group">
+									<label class="sr-only" for="date">Date</label>
+									<input type="date" id="date" placeholder="Date, format AAAA-MM-JJ"  class="form-username form-control" data-ng-model="demande.date" required>
+								</div>
+								
+								<div class="form-group">
+									<label class="sr-only" for="heureDebut">Heure de début</label>
+									<input type="time" placeholder="Heure de début, format HH:MM" id="heureDebut" class="form-username form-control"  pattern="\d{2}:{1}0{2}" data-ng-model="demande.heureDebut" required>
+								</div>
+								
+								<div class="form-group">
+									<label class="sr-only" for="heureFin">Heure de fin</label>
+									<input type="time" placeholder="Heure de fin, format HH:MM" id="heureFin" class="form-username form-control" pattern="\d{2}:{1}0{2}" data-ng-model="demande.heureFin" required>
+								</div>
+								
+								<div class="form-group">
+									<label for="videoProjecteur">Vidéo projecteur</label>
+									<input type="checkbox" id="videoProjecteur" data-ng-model="demande.videoProjecteur">
+								</div>
+								
+								<button type="submit"  class="btn" data-ng-click="ajout()">Ajouter Cours</button>
+							</form>
+						</div>
+					</div>
+				</div>
 
-            <form>
-                <div>
-                    <label for="enseignant">Enseignant</label>
-                    <input id="enseignant" data-ng-model="demande.enseignant" required>
-                </div>
-                <div>
-                    <label for="classe">Classe</label>
-                    <select id="classe" data-ng-model="demande.classe" required>
-                        <option data-ng-repeat="elt in classe" value="{{$index}}">{{elt.nomClasse}}</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="salle">Salle</label>
-                    <input id="salle" data-ng-model="demande.salle" required>
-                </div>
-                <div>
-                    <label for="date">Date</label>
-                    <input type="date" id="date" placeholder="AAAA-MM-JJ" data-ng-model="demande.date" required>
-                </div>
-                <div>
-                    <label for="heureDebut">Heure de début</label>
-                    <input type="time" placeholder="HH:MM" id="heureDebut" pattern="\d{2}:{1}0{2}" data-ng-model="demande.heureDebut" required>
-                </div>
-                <div>
-                    <label for="heureFin">Heure de fin</label>
-                    <input type="time" placeholder="HH:MM" id="heureFin" pattern="\d{2}:{1}0{2}" data-ng-model="demande.heureFin" required>
-                </div>
-                <div>
-                    <label for="videoProjecteur">Vidéo projecteur</label>
-                    <input type="checkbox" id="videoProjecteur" data-ng-model="demande.videoProjecteur">
-                </div>
-                <input type="submit" data-ng-click="ajout()">
-            </form>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-1"></div>
 
-            <div id="enseignants">
-                <table class="table table-bordered table-striped">
-                    <tr>
-                        <td>Login de l'enseignant</td>
-                        <td>Prénom de l'enseignant</td>
-                        <td>Nom de l'enseignant</td>
-                    </tr>
-                    <tr data-ng-repeat="a in enseignants track by $index">
-                        <td>{{ a.loginEnseignant }}</td>
-                        <td>{{ a.prenomEnseignant }}</td>
-                        <td>{{ a.nomEnseignant }}</td>
-                    </tr>
-                </table>
-                <p>Ajouter un enseignant</p>
-                <form>
-                    <label for="prenomEnseignant">Prénom de l'enseignant</label>
-                    <input type="text" data-ng-model="newEnseignant.prenomEnseignant" id="prenomEnseignant"><br>
-                    <label for="nomEnseignant"> Nom de l'enseignant</label>
-                    <input type="text" data-ng-model="newEnseignant.nomEnseignant" id="nomEnseignant"><br>
-                    <input type="submit" data-ng-click="newEnseignant()">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
+				<div class="col-sm-5">                        	
+					<div class="form-box">
+						<div id="trie" class="form-bottom">
+							<form role="form" action="" method="post" class="registration-form">
+								<div class="form-group">
+									<label class="sr-only" for="trieDate"></label>
+									<input type="date" id="trieDate" placeholder="Date, format AAAA-MM-JJ" class="form-first-name form-control" data-ng-model="trieDate">
+								</div>
+								
+								<div class="form-group">										
+									<label for="trieType">Trier par</label>
+									<select id="trieType" data-ng-model="trieType" class="form-last-name form-control" data-ng-options='option.value as option.name for option in trieOptions' trie-appear>
+									</select>
+									<br>
+								</div>
+								
+								<button type="submit"  class="btn" data-ng-click="">Trier</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row col-10">
+				<footer>
+					<div class="footer-border"></div>
+				</footer>
+				
+				<div class="row col-10">
+					<table class="table table-bordered table-striped">
+						<tr class="success">
+							<td>Enseignant</td>
+							<td>Classe</td>
+							<td>Salle</td>
+							<td>Date</td>
+							<td>Heure de début</td>
+							<td>Heure de fin</td>
+							<td>Vidéo projecteur</td>
+						</tr>
+						
+						<tr data-ng-repeat="elt in coursSave track by $index">
+							<td>{{enseignants[elt.idEnseignant].prenomEnseignant}} {{enseignants[elt.idEnseignant].nomEnseignant}}</td>
+							<td>{{classe[elt.idClasse].nomClasse}}</td>
+							<td>{{elt.idSalle}}</td>
+							<td>{{elt.date}}</td>
+							<td>{{elt.heureDebut}}</td>
+							<td>{{elt.heureFin}}</td>
+							<td>{{elt.videoProjecteur}}</td>
+						</tr>
+					</table>
+
+					<table class="col-10 table table-bordered table-striped">
+						<tr  class="success">
+							<td><img src="img/suppr.png" alt="suppr" data-ng-click="deletePlanning()"/></td>
+							<td scope="col">Lundi</td>
+							<td scope="col">Mardi</td>
+							<td scope="col">Mercredi</td>
+							<td scope="col">Jeudi</td>
+							<td scope="col">Vendredi</td>
+							<td scope="col">Samedi</td>
+							<td scope="col">Dimanche</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">9h - 10h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='09:00' && b.heureFin>='10:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">10h - 11h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='10:00' && b.heureFin>='11:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">11h - 12h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='11:00' && b.heureFin>='12:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">12h - 13h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='12:00' && b.heureFin>='13:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">13h - 14h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='13:00' && b.heureFin>='14:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">14h - 15h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='14:00' && b.heureFin>='15:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">15h - 16h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='15:00' && b.heureFin>='16:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }}
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">16h - 17h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='16:00' && b.heureFin>='17:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td scope="row"  class="success">17h - 18h</td>
+							<td data-ng-repeat="a in [1,2,3,4,5,6,7]">
+								<ul>
+									<li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='17:00' && b.heureFin>='18:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">
+										<span data-ng-show="trieType != 2">
+											{{ classe[b.idClasse].nomClasse }} 
+										</span>
+										<span data-ng-show="trieType != 1">
+											{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} 
+										</span>
+										Salle : {{ b.idSalle }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

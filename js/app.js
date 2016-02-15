@@ -24,7 +24,23 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     else {
         $scope.enseignants = [];
     }
-
+	
+	// Données des salles
+    if(localStorage.getItem('salles')) {
+        $scope.salles = JSON.parse(localStorage.getItem('salles'));
+    }
+    else {
+        $scope.salles = [];
+    }
+	
+	// Données des classes
+    if(localStorage.getItem('classes')) {
+        $scope.classe = JSON.parse(localStorage.getItem('classes'));
+    }
+    else {
+        $scope.classe = [];
+    }
+	
     // Si on fait directement new Date(), on aura une date comme "2016-02-14T14:06:25.869Z" alors qu'on veut juste "2016-02-14T00:00:00.000Z"
     // C'est pourquoi on fait un new Date en précisant bien l'année, le mois et le jour pour n'avoir que ce qu'on veut
     $scope.formatDate = function(date) {
@@ -50,67 +66,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
     delete dateTmp; // Surpprimer la variable temporaire
 
-    $scope.videoProjecteur = 3;
-    $scope.salles = [{
-        'effectifSalle':2,
-        'idSalle':100
-    }, {
-        'effectifSalle':30,
-        'idSalle':101
-    }, {
-        'effectifSalle':35,
-        'idSalle':102
-    },{
-        'effectifSalle':20,
-        'idSalle':103
-    },{
-        'effectifSalle':35,
-        'idSalle':104
-    },{
-        'effectifSalle':25,
-        'idSalle':105
-    }];
-    /*$scope.enseignants = [{
-        'loginEnseignant': 'gchagnon',
-        'prenomEnseignant': 'Gilles',
-        'nomEnseignant': 'Chagnon'
-    }, {
-        'loginEnseignant': 'pnollet',
-        'prenomEnseignant': 'Patrick',
-        'nomEnseignant': 'Nollet'
-    }, {
-        'loginEnseignant': 'fhollande',
-        'prenomEnseignant': 'François',
-        'nomEnseignant': 'Hollande'
-    }, {
-        'loginEnseignant': 'mlisa',
-        'prenomEnseignant': 'Mona',
-        'nomEnseignant': 'Lisa'
-    }];*/
-
-    $scope.classe = [{
-        'nomClasse': 'BTS SIO',
-        'effectifClasse': 18
-    }, {
-        'nomClasse': 'Licence Physique',
-        'effectifClasse': 28
-    }, {
-        'nomClasse': 'Licence professionnelle ',
-        'effectifClasse': 30
-    }, {
-        'nomClasse': 'Licence professionnelle Projet Web',
-        'effectifClasse': 25
-    }];
-
-    /*$scope.cours = [{
-     'idEnseignant': 0,
-     'idClasse': 0,
-     'idSalle': 100,
-     'heureDebut': 8,
-     'heureFin': 9,
-     'videoProjecteur': 1
-     }];*/
-
+    $scope.videoProjecteur = 3;    
+	
     // Différents tries disponibles
     $scope.trieOptions = [
         {name:"", value:0},
@@ -235,7 +192,27 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         // Détruire cette variable parce que c'est une variable globale pour éviter que d'autres fonctions s'en servent
         delete newCours;
     }
-
+	
+	$scope.deletePlanning = function(d) {
+       localStorage.removeItem('data');
+	   location.reload(); 
+    }
+	
+	$scope.deleteProf = function(d) {
+       localStorage.removeItem('enseignants');
+	   location.reload(); 
+    }
+	
+	$scope.deleteSalle = function(d) {
+       localStorage.removeItem('salles');
+	   location.reload(); 
+    }
+	
+	$scope.deleteClasse = function(d) {
+       localStorage.removeItem('classes');
+	   location.reload(); 
+    }
+	
     // Ajouter un enseignant
     $scope.newEnseignant = function(d) {        
         var loginEnseignant = $scope.newEnseignant.prenomEnseignant[0].toLowerCase() + $scope.newEnseignant.nomEnseignant.toLowerCase();
@@ -250,6 +227,36 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             'nomEnseignant':$scope.newEnseignant.nomEnseignant
         });
         localStorage.setItem('enseignants', JSON.stringify($scope.enseignants));
+    }
+	
+	// Ajouter une salle
+    $scope.newSalle = function(d) {  
+        var numSalle = $scope.newSalle.idSalle;
+        // Vérifier que la salle n'existe pas déjà
+        if($filter('existeSalle')($scope.salles, numSalle) != -1) {
+            alert("Cette salle existe déjà.");
+            return;
+        }
+        $scope.salles.push({
+			'effectifSalle':$scope.newSalle.effectifSalle,
+			'idSalle':$scope.newSalle.idSalle
+        });
+        localStorage.setItem('salles', JSON.stringify($scope.salles));
+    }
+	
+	// Ajouter une classe
+    $scope.newClasse = function(d) {  
+        var nomClasse = $scope.newClasse.nomClasse;
+        // Vérifier que la classe n'existe pas déjà
+        if($filter('existeClasse')($scope.classe, nomClasse) != -1) {
+            alert("Cette classe existe déjà.");
+            return;
+        }
+        $scope.classe.push({
+			'nomClasse': $scope.newClasse.nomClasse,
+			'effectifClasse': $scope.newClasse.effectifClasse
+        });
+        localStorage.setItem('classes', JSON.stringify($scope.classe));
     }
 
     // Obtenir le numéro de la semaine en fonction d'une date
@@ -313,6 +320,17 @@ app.filter('existeSalle', function () {
     return function (salles, num) {
         for (var i = 0; i < salles.length; i++) {
             if (salles[i].idSalle == num) {
+                return i;
+            }
+        }
+        return -1;
+    }
+});
+
+app.filter('existeClasse', function () {
+    return function (classe, nom) {
+        for (var i = 0; i < classe.length; i++) {
+            if (classe[i].nomClasse === nom) {
                 return i;
             }
         }
