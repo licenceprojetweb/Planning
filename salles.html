@@ -72,18 +72,18 @@
 				<div class="col-sm-5">                        	
 					<div class="form-box">				   
 						<div id="enseignants" class="form-bottom">
-							<form role="form" action="" method="post" class="registration-form">
+							<form role="form" class="registration-form">
 								<div class="form-group">
 									<label class="sr-only" for="idSalle">Numéro Salle</label>
-									<input type="text" placeholder="Numéro salle" data-ng-model="newSalle.idSalle" class="form-first-name form-control" id="idSalle">
+									<input type="text" placeholder="Numéro salle" data-ng-model="newSalle.idSalle" class="form-first-name form-control" id="idSalle" required>
 								</div>
 								
 								<div class="form-group">										
 									<label class="sr-only" for="effectifSalle">Effectif Salle</label>
-									<input type="text" placeholder="Effectif salle" data-ng-model="newSalle.effectifSalle" class="form-first-name form-control" id="effectifSalle">
+									<input type="text" placeholder="Effectif salle" data-ng-model="newSalle.effectifSalle" class="form-first-name form-control" id="effectifSalle" required>
 								</div>
 								
-								<button type="submit"  class="btn" data-ng-click="newSalle()">Ajouter Salle</button>
+								<button class="btn" data-ng-click="newSalle()">Ajouter Salle</button>
 							</form>
 						</div>
 					</div>						
@@ -104,7 +104,7 @@
 						</tr>
 						
 						<tr data-ng-repeat="a in salles track by $index">
-							<td><img src="img/suppr.png" alt="suppr" data-ng-click="deleteSalle()"/></td>
+							<td><img src="img/suppr.png" alt="suppr" data-ng-click="deleteSalle($index)"/></td>
 							<td>{{ a.idSalle }}</td>
 							<td>{{ a.effectifSalle }}</td>
 						</tr>

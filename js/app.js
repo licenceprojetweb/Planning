@@ -132,7 +132,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         if(date < dateactuelle)
         {
 
-            alert("La date renseignée doit être égale ou supérieur à la date actuelle");
+            alert("La date renseignée doit être supérieure à la date actuelle");
             return;
         }
 
@@ -193,28 +193,36 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         delete newCours;
     }
 	
-	$scope.deletePlanning = function(d) {
-       localStorage.removeItem('data');
-	   location.reload(); 
+	$scope.deletePlanning = function() {
+       /* console.log("entrée");
+       for(var i=0; i<$scope.coursSave.length; i++) {
+        console.log($scope.coursSave[i].dateTmp.getFullYear());
+            if($scope.coursSave[i].dateTmp.getFullYear() == $scope.trieDate.getFullYear()) {
+                console.log("trol");
+            }
+       }*/
     }
 	
-	$scope.deleteProf = function(d) {
-       localStorage.removeItem('enseignants');
-	   location.reload(); 
+	$scope.deleteProf = function(index) {
+      $scope.enseignants.splice(index, 1);
+      localStorage.setItem('enseignants', JSON.stringify($scope.enseignants));
     }
 	
-	$scope.deleteSalle = function(d) {
-       localStorage.removeItem('salles');
-	   location.reload(); 
+	$scope.deleteSalle = function(index) {
+        $scope.salles.splice(index, 1);
+      localStorage.setItem('salles', JSON.stringify($scope.salles));       
     }
 	
-	$scope.deleteClasse = function(d) {
-       localStorage.removeItem('classes');
-	   location.reload(); 
+	$scope.deleteClasse = function(index) {
+        $scope.classe.splice(index, 1);
+      localStorage.setItem('classe', JSON.stringify($scope.classe));
     }
 	
     // Ajouter un enseignant
-    $scope.newEnseignant = function(d) {        
+    $scope.newEnseignant = function() {        
+        if(!$scope.newEnseignant.prenomEnseignant || !$scope.newEnseignant.nomEnseignant) {
+            return;
+        }
         var loginEnseignant = $scope.newEnseignant.prenomEnseignant[0].toLowerCase() + $scope.newEnseignant.nomEnseignant.toLowerCase();
         // Vérifier que le login n'existe pas déjà
         if($filter('getEnseignantId')($scope.enseignants, loginEnseignant) != -1) {
@@ -230,11 +238,18 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
 	
 	// Ajouter une salle
-    $scope.newSalle = function(d) {  
+    $scope.newSalle = function() {  
         var numSalle = $scope.newSalle.idSalle;
+        if(!$scope.newSalle.idSalle || !$scope.newSalle.effectifSalle) {
+            return;
+        }
         // Vérifier que la salle n'existe pas déjà
         if($filter('existeSalle')($scope.salles, numSalle) != -1) {
             alert("Cette salle existe déjà.");
+            return;
+        }
+        if($scope.newSalle.effectifSalle <= 0) {
+            alert("Vous ne pouvez pas créer une salle sans aucune place.");
             return;
         }
         $scope.salles.push({
@@ -245,11 +260,18 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
 	
 	// Ajouter une classe
-    $scope.newClasse = function(d) {  
+    $scope.newClasse = function() {
         var nomClasse = $scope.newClasse.nomClasse;
+        if(!$scope.newClasse.nomClasse || !$scope.newClasse.effectifClasse) {
+            return;
+        }        
         // Vérifier que la classe n'existe pas déjà
         if($filter('existeClasse')($scope.classe, nomClasse) != -1) {
             alert("Cette classe existe déjà.");
+            return;
+        }
+        if($scope.newClasse.effectifClasse <= 0) {
+            alert("Vous ne pouvez pas créer une classe sans aucun élève.");
             return;
         }
         $scope.classe.push({

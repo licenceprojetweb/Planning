@@ -72,18 +72,18 @@
 				<div class="col-sm-5">                        	
 					<div class="form-box">				   
 						<div id="enseignants" class="form-bottom">
-							<form role="form" action="" method="post" class="registration-form">
+							<form role="form" class="registration-form">
 								<div class="form-group">
 									<label class="sr-only" for="prenomEnseignant">Prénom de l'enseignant</label>
-									<input type="text" placeholder="Prénom de l'enseignant" data-ng-model="newEnseignant.prenomEnseignant" class="form-first-name form-control" id="prenomEnseignant">
+									<input type="text" placeholder="Prénom de l'enseignant" data-ng-model="newEnseignant.prenomEnseignant" class="form-first-name form-control" id="prenomEnseignant" required>
 								</div>
 								
 								<div class="form-group">										
 									<label class="sr-only" for="nomEnseignant"> Nom de l'enseignant</label>
-									<input type="text" placeholder="Nom de l'enseignant" data-ng-model="newEnseignant.nomEnseignant" class="form-first-name form-control" id="nomEnseignant">
+									<input type="text" placeholder="Nom de l'enseignant" data-ng-model="newEnseignant.nomEnseignant" class="form-first-name form-control" id="nomEnseignant" required>
 								</div>
 								
-								<button type="submit"  class="btn" data-ng-click="newEnseignant()">Ajouter Enseignant</button>
+								<button class="btn" data-ng-click="newEnseignant()">Ajouter Enseignant</button>
 							</form>
 						</div>
 					</div>						
@@ -105,7 +105,7 @@
 						</tr>
 						
 						<tr data-ng-repeat="a in enseignants track by $index">
-							<td><img src="img/suppr.png" alt="suppr" data-ng-click="deleteProf()"/></td>
+							<td><img src="img/suppr.png" alt="suppr" data-ng-click="deleteProf($index)"/></td>
 							<td>{{ a.loginEnseignant }}</td>
 							<td>{{ a.prenomEnseignant }}</td>
 							<td>{{ a.nomEnseignant }}</td>
