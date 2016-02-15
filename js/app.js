@@ -18,7 +18,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     // Si on fait directement new Date(), on aura une date comme "2016-02-14T14:06:25.869Z" alors qu'on veut juste "2016-02-14T00:00:00.000Z"
     // C'est pourquoi on fait un new Date en précisant bien l'année, le mois et le jour pour n'avoir que ce qu'on veut
     $scope.formatDate = function(date) {
-        return new Date(date.getFullYear() + "-" + ('0' + parseInt(date.getMonth()+1)).slice(-2) + "-" + date.getDate());
+        return new Date(date.getFullYear() + "-" + ('0' + parseInt(date.getMonth()+1)).slice(-2) + "-" + ('0' + date.getDate()).slice(-2));
     }
 
     // Mettre la date du jour pour voir l'emploi du temps du jour    
@@ -291,7 +291,7 @@ app.filter('existeCours', function () {
         for (var i = 0; i < oldCours.length; i++) {
 			oldCours[i].date = new Date(oldCours[i].date);
 			
-            if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin) {
+            if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin && oldCours[i].dateTmp.getTime() == newCours.dateTmp.getTime()) {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
                     if (numVideoProjecteur >= maxVideoProjecteurs) {
