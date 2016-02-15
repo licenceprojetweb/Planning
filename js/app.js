@@ -3,7 +3,7 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
 
     // Le code du contrôleur
-    //localStorage.clear();
+    localStorage.clear();
     $scope.saved = localStorage.getItem('data');
     if(localStorage.getItem('data')!==null)
     {
@@ -156,15 +156,27 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             alert("L'heure de début du cours est supérieur à la date de fin du cours");
             return;
         }
-
         console.log($scope.demande.heureDebut);
+        dateactuelle = new Date();
+        heureDebut = new Date ($scope.demande.heureDebut);
+        heureFin = new Date ($scope.demande.heureFin);
 
-        var date = new Date($scope.demande.date);
-        var heureDebut = new Date ($scope.demande.heureDebut);
-        var heureFin = new Date ($scope.demande.heureFin);
+        date = new Date($scope.demande.date);
 
-        console.log(heureDebut.getHours());
-        console.log(heureFin.getHours());
+        if(date < dateactuelle)
+        {
+
+            alert("La date renseignée doit être égale ou supérieur à la date actuelle");
+            return;
+        }
+
+
+        if(heureDebut.getHours() < 9 || heureDebut.getHours() > 18 || heureFin.getHours() < 9 || heureFin.getHours() > 18)
+        {
+            alert("Les horaires indiquées ne sont pas paramétrés pour des cours");
+            return;
+        }
+		
         var heureDebutFormat = heureDebut.getHours();
         if (heureDebut.getHours() < 10) {
             heureDebutFormat = "0"+heureDebutFormat;
