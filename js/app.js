@@ -159,7 +159,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             'date': date.getDate()+"/"+parseInt(date.getMonth()+1)+"/"+date.getFullYear(),
             'heureDebut': heureDebutFormat+":"+minutesDebutFormat,
             'heureFin': heureFinFormat+":"+minutesFinFormat,
-            'videoProjecteur': $scope.demande.videoProjecteur
+            'videoProjecteur': $scope.demande.videoProjecteur,
+            'dateTmp': date
         };
 
         // Voir si un cours n'a pas déjà été reservé dans la salle
@@ -169,14 +170,30 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         // Envoyer les données dans le tableau
         $scope.coursSave.push(newCours);
-        for(var i=0; i<$scope.coursSave.length; i++) {
+        /*for(var i=0; i<$scope.coursSave.length; i++) {
             $scope.coursSave[i].dateTmp = undefined;
-        }
+        }*/
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
         console.log(localStorage.getItem('data'));
 
         // Détruire cette variable parce que c'est une variable globale pour éviter que d'autres fonctions s'en servent
         delete newCours;
+    }
+
+    // Obtenir le numéro de la semaine en fonction d'une date
+    $scope.getWeekNumber = function(d) {
+        // Copier la date pour ne pas modifier l'original
+        d = new Date(+d);
+        d.setHours(0,0,0);
+        // Set to nearest Thursday: current date + 4 - current day number
+        // Make Sunday's day number 7
+        d.setDate(d.getDate() + 4 - (d.getDay()||7));
+        // Get first day of year
+        var yearStart = new Date(d.getFullYear(),0,1);
+        // Calculate full weeks to nearest Thursday
+        var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+        // Retourner le numéro de semaine
+        return weekNo;
     }
 }]);
 
