@@ -3,7 +3,7 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
 
     // Le code du contrôleur
-    //localStorage.clear();
+    // localStorage.clear();
     $scope.saved = localStorage.getItem('data');
     if(localStorage.getItem('data')!==null)
     {
@@ -42,7 +42,25 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
     console.log(localStorage.getItem('data'));
     $scope.videoProjecteur = 3;
-    $scope.salles = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110];
+    $scope.salles = [{
+        'effectifSalle':25,
+        'idSalle':100
+    }, {
+        'effectifSalle':30,
+        'idSalle':101
+    }, {
+        'effectifSalle':35,
+        'idSalle':102
+    },{
+        'effectifSalle':20,
+        'idSalle':103
+    },{
+        'effectifSalle':35,
+        'idSalle':104
+    },{
+        'effectifSalle':25,
+        'idSalle':105
+    }];
     $scope.enseignants = [{
         'loginEnseignant': 'gchagnon',
         'prenomEnseignant': 'Gilles',
@@ -118,6 +136,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             videoprojecteur = "Non";
         }
 
+
+
         // Si il manque des champs, arrêter la fonction ici
         if (idEnseignant <= -1) {
             alert("Le login de l'enseignant n'est pas valide.");
@@ -142,6 +162,23 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
+
+        for (var s = 0; s < $scope.salles.length; s++) {
+            if ($scope.salles[s].idSalle == $scope.demande.idSalle) {
+                for (var c = 0; c < $scope.classe.length; c++)
+                {
+                    if($scope.demande.idClasse == $scope.classe[c].nomClasse)
+                    {
+                        if ($scope.salles[s].effectifSalle < $scope.classe[c].effectifClasse)
+                        {
+                            alert("La salle demandée n'est pas assez grande pour cette classe")
+                        }
+                    }
+                }
+
+            }
+                return true;
+            }
 
         // Formater la date dans les champs heureDebut et heureFin
         $scope.demande.heureDebut.setDate($scope.demande.date.getDate());
@@ -288,7 +325,7 @@ app.filter('getEnseignantId', function () {
 app.filter('existeSalle', function () {
     return function (salles, num) {
         for (var i = 0; i < salles.length; i++) {
-            if (salles[i] == num) {
+            if (salles[i].idSalle == num) {
                 return true;
             }
         }
