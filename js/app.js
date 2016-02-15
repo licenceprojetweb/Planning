@@ -95,21 +95,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
     $scope.ajout = function () {
 
-        dateactuelle = new Date();
-        var date = new Date($scope.demande.date);
-
-        if(date < dateactuelle)
-        {
-            alert("La date renseignée doit être égale ou supérieur à la date actuelle");
-            return;
-        }
-
-        if(date.getHours() < 9 || date.getHours() > 18)
-        {
-            alert("Les horaires indiquées ne sont pas paramétrés pour des cours");
-            return;
-        }
-
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
         // Si on veut un retro projecteur
@@ -119,7 +104,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             if($scope.videoProjecteur < 1)
             {
                 // On sort
-                alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout")
+                alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout");
                 return;
             }
             else
@@ -173,12 +158,24 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.demande.heureFin.setFullYear($scope.demande.date.getFullYear());
 
         console.log($scope.demande.heureDebut);
+        dateactuelle = new Date();
+        heureDebut = new Date ($scope.demande.heureDebut);
+        heureFin = new Date ($scope.demande.heureFin);
 
-        var heureDebut = new Date ($scope.demande.heureDebut);
-        var heureFin = new Date ($scope.demande.heureFin);
+        date = new Date($scope.demande.date);
 
-        console.log(heureDebut.getHours());
-        console.log(heureFin.getHours());
+        if(date < dateactuelle)
+        {
+            alert("La date renseignée doit être égale ou supérieur à la date actuelle");
+            return;
+        }
+
+        if(heureDebut.getHours() < 9 || heureDebut.getHours() > 18 || heureFin.getHours() < 9 || heureFin.getHours() > 18)
+        {
+            alert("Les horaires indiquées ne sont pas paramétrés pour des cours");
+            return;
+        }
+
 
         var heureDebutFormat = heureDebut.getHours();
         if (heureDebut.getHours() < 10) {
