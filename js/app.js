@@ -15,12 +15,14 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
     }
 
-    // Mettre la date du jour pour voir l'emploi du temps du jour
-    var tmpDateToday = new Date();
     // Si on fait directement new Date(), on aura une date comme "2016-02-14T14:06:25.869Z" alors qu'on veut juste "2016-02-14T00:00:00.000Z"
-    // C'est pourquoi on refait un new Date en précisant bien l'année, le mois et le jour pour n'avoir que ce qu'on veut
-    $scope.trieDate = new Date(tmpDateToday.getFullYear() + "-" + ('0' + parseInt(tmpDateToday.getMonth()+1)).slice(-2) + "-" + tmpDateToday.getDate());
-    delete tmpDateToday; // Détruire la variable qui ne sert plus à rien
+    // C'est pourquoi on fait un new Date en précisant bien l'année, le mois et le jour pour n'avoir que ce qu'on veut
+    $scope.formatDate = function(date) {
+        return new Date(date.getFullYear() + "-" + ('0' + parseInt(date.getMonth()+1)).slice(-2) + "-" + date.getDate());
+    }
+
+    // Mettre la date du jour pour voir l'emploi du temps du jour    
+    $scope.trieDate = $scope.formatDate(new Date());
 
     // Convertir les dates en format de $scope.coursSave texte en objet Date pour que les comparaisons soient plus faciles
     var dateTmp;
@@ -82,17 +84,39 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
      'videoProjecteur': 1
      }];*/
 
-     // Différents tries disponibles
+    // Différents tries disponibles
     $scope.trieOptions = [
-      {name:"", value:0},
-      {name:"Professeur", value:1},
-      {name:"Classe", value:2}
+        {name:"", value:0},
+        {name:"Professeur", value:1},
+        {name:"Classe", value:2}
     ];
     // Mettre la <select> à une valeur par défaut
     $scope.trieType = $scope.trieOptions[0].value;
 
     $scope.ajout = function () {
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
+
+        // Si on veut un retro projecteur
+        if ($scope.demande.videoProjecteur)
+        {
+            // Si le nombre de projecteur est à 0
+            if($scope.videoProjecteur < 1)
+            {
+                // On sort
+                alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout")
+                return;
+            }
+            else
+            {
+                // Sinon on enlève un projecteur
+                $scope.videoProjecteur = $scope.videoProjecteur -1;
+                videoprojecteur = "Oui";
+            }
+        }
+        else
+        {
+            videoprojecteur = "Non";
+        }
 
         // Si il manque des champs, arrêter la fonction ici
         if (idEnseignant <= -1) {
@@ -111,7 +135,16 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             return;
         }
 
+        if ($scope.demande.heureDebut.getTime() == $scope.demande.heureFin.getTime()) {
+            alert("Les heures doivent être différentes.");
+            return;
+        }
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
+        if($scope.demande.heureDebut > $scope.demande.heureFin)
+        {
+            alert("L'heure de début du cours est supérieur à la date de fin du cours");
+            return;
+        }
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
 
@@ -151,16 +184,18 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             minutesFinFormat = "0"+minutesFinFormat;
         }
 
+        // Ajout d'un mois pour affichage
+        date.setMonth(date.getMonth()+1);
         // Créer le cours
         newCours = {
             'idEnseignant': idEnseignant,
             'idClasse': $scope.demande.classe,
             'idSalle': $scope.demande.salle,
-            'date': date.getDate()+"/"+parseInt(date.getMonth()+1)+"/"+date.getFullYear(),
+            'date': date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear(),
             'heureDebut': heureDebutFormat+":"+minutesDebutFormat,
             'heureFin': heureFinFormat+":"+minutesFinFormat,
             'videoProjecteur': $scope.demande.videoProjecteur,
-            'dateTmp': date
+            'dateTmp': $scope.formatDate($scope.demande.date)
         };
 
         // Voir si un cours n'a pas déjà été reservé dans la salle
@@ -213,10 +248,12 @@ app.directive('trieAppear', function ($compile) {
               if (scope.trieType == 1) {
                 template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in enseignants' value='{{$index}}'>{{elt.prenomEnseignant}} {{elt.nomEnseignant}}</option></select>";
               }
+			  
               // Si c'est 2, on a choisi classe
               else if (scope.trieType == 2) {
                 template = "<select data-ng-model='trieIndex' class='trie'><option data-ng-repeat='elt in classe' value='{{$index}}'>{{elt.nomClasse}}</option></select>";
               }
+			  
               // Faire apparaître la nouvelle <select> après la première
               element.parent().append($compile(template)(scope));
             }
@@ -252,7 +289,8 @@ app.filter('existeCours', function () {
         var message = "";
         console.log(oldCours.length);
         for (var i = 0; i < oldCours.length; i++) {
-            console.log(oldCours[i].heureDebut);
+			oldCours[i].date = new Date(oldCours[i].date);
+			
             if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin) {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
