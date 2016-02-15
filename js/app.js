@@ -43,7 +43,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     console.log(localStorage.getItem('data'));
     $scope.videoProjecteur = 3;
     $scope.salles = [{
-        'effectifSalle':25,
+        'effectifSalle':2,
         'idSalle':100
     }, {
         'effectifSalle':30,
@@ -114,37 +114,18 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     $scope.ajout = function () {
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
-        // Si on veut un retro projecteur
-        if ($scope.demande.videoProjecteur)
-        {
-            // Si le nombre de projecteur est à 0
-            if($scope.videoProjecteur == 0)
-            {
-                // On sort
-                alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout")
-                return;
-            }
-            else
-            {
-                // Sinon on enlève un projecteur
-                $scope.videoProjecteur = $scope.videoProjecteur -1;
-                videoprojecteur = "Oui";
-            }
-        }
-        else
-        {
-            videoprojecteur = "Non";
-        }
-
-
-
         // Si il manque des champs, arrêter la fonction ici
         if (idEnseignant <= -1) {
             alert("Le login de l'enseignant n'est pas valide.");
             return;
         }
-        if (!$scope.demande.salle || !$filter('existeSalle')($scope.salles, $scope.demande.salle)) {
+        var indexSalle = $filter('existeSalle')($scope.salles, $scope.demande.salle)
+        if (!$scope.demande.salle || indexSalle == -1) {
             alert("La salle que vous avez entré n'existe pas.");
+            return;
+        }
+        if($scope.classe[$scope.demande.classe].effectifClasse > $scope.salles[indexSalle].effectifSalle) {
+            alert("La salle demandée n'est pas assez grande pour cette classe.");
             return;
         }
         if (!$scope.demande.classe || !$scope.demande.date || !$scope.demande.heureDebut || !$scope.demande.heureFin) {
@@ -162,23 +143,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
-
-        for (var s = 0; s < $scope.salles.length; s++) {
-            if ($scope.salles[s].idSalle == $scope.demande.idSalle) {
-                for (var c = 0; c < $scope.classe.length; c++)
-                {
-                    if($scope.demande.idClasse == $scope.classe[c].nomClasse)
-                    {
-                        if ($scope.salles[s].effectifSalle < $scope.classe[c].effectifClasse)
-                        {
-                            alert("La salle demandée n'est pas assez grande pour cette classe")
-                        }
-                    }
-                }
-
-            }
-                return true;
-            }
 
         // Formater la date dans les champs heureDebut et heureFin
         $scope.demande.heureDebut.setDate($scope.demande.date.getDate());
@@ -326,6 +290,18 @@ app.filter('existeSalle', function () {
     return function (salles, num) {
         for (var i = 0; i < salles.length; i++) {
             if (salles[i].idSalle == num) {
+                return i;
+            }
+        }
+        return -1;
+    }
+});
+
+// Retourne true si la salle n'est pas assez grande pour le nombre d'élèves dans la classe
+app.filter('problemePlaces', function () {
+    return function (salles, effectifClasse) {
+        for (var i = 0; i < salles.length; i++) {
+            if (effectifClasse > salles[i].effectifSalle) {
                 return true;
             }
         }
@@ -345,7 +321,7 @@ app.filter('existeCours', function () {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
                     if (numVideoProjecteur >= maxVideoProjecteurs) {
-                        message += "Le vidéo projecteur est déjà pris.\n";
+                        message += "Il n'y a plus de vidéo projecteur de diponible.\n";
                         newCours.videoProjecteur = false;
                     }
                 }
