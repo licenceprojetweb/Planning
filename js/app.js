@@ -194,7 +194,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
 	
 	$scope.deletePlanning = function() {
-       /* console.log("entrée");
+       /*console.log("entrée");
        for(var i=0; i<$scope.coursSave.length; i++) {
         console.log($scope.coursSave[i].dateTmp.getFullYear());
             if($scope.coursSave[i].dateTmp.getFullYear() == $scope.trieDate.getFullYear()) {

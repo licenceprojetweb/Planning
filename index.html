@@ -123,7 +123,7 @@
 				<div class="col-sm-5">                        	
 					<div class="form-box">
 						<div id="trie" class="form-bottom">
-							<form role="form" action="" method="post" class="registration-form">
+							<form role="form" class="registration-form">
 								<div class="form-group">
 									<label class="sr-only" for="trieDate"></label>
 									<input type="date" id="trieDate" placeholder="Date, format AAAA-MM-JJ" class="form-first-name form-control" data-ng-model="trieDate">
@@ -136,7 +136,7 @@
 									<br>
 								</div>
 								
-								<button type="submit"  class="btn" data-ng-click="">Trier</button>
+								<button class="btn">Trier</button>
 							</form>
 						</div>
 					</div>
@@ -149,6 +149,28 @@
 				</footer>
 				
 				<div class="row col-10">
+
+					<table class="table table-bordered table-striped">
+						<tr class="success">
+							<td>Enseignant</td>
+							<td>Classe</td>
+							<td>Salle</td>
+							<td>Date</td>
+							<td>Heure de début</td>
+							<td>Heure de fin</td>
+							<td>Vidéo projecteur</td>
+						</tr>
+						
+						<tr data-ng-repeat="elt in coursSave track by $index">
+							<td>{{enseignants[elt.idEnseignant].prenomEnseignant}} {{enseignants[elt.idEnseignant].nomEnseignant}}</td>
+							<td>{{classe[elt.idClasse].nomClasse}}</td>
+							<td>{{elt.idSalle}}</td>
+							<td>{{elt.date}}</td>
+							<td>{{elt.heureDebut}}</td>
+							<td>{{elt.heureFin}}</td>
+							<td>{{elt.videoProjecteur}}</td>
+						</tr>
+					</table>
 
 					<table class="col-10 table table-bordered table-striped">
 						<tr  class="success">
