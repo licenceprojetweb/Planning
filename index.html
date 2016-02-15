@@ -61,55 +61,55 @@
                 <tr>
                     <td scope="row">9h - 10h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='09:00' && b.heureFin>='10:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='09:00' && b.heureFin>='10:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">10h - 11h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='10:00' && b.heureFin>='11:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='10:00' && b.heureFin>='11:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">11h - 12h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='11:00' && b.heureFin>='12:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='11:00' && b.heureFin>='12:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">12h - 13h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='12:00' && b.heureFin>='13:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='12:00' && b.heureFin>='13:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">13h - 14h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='13:00' && b.heureFin>='14:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='13:00' && b.heureFin>='14:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">14h - 15h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='14:00' && b.heureFin>='15:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='14:00' && b.heureFin>='15:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">15h - 16h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='15:00' && b.heureFin>='16:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='15:00' && b.heureFin>='16:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">16h - 17h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='16:00' && b.heureFin>='17:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='16:00' && b.heureFin>='17:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
                 <tr>
                     <td scope="row">17h - 18h</td>
                     <td data-ng-repeat="a in [1,2,3,4,5,6,7]">
-                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='17:00' && b.heureFin>='18:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ b.idSalle }}</li></ul>
+                        <ul><li data-ng-repeat="b in coursSave" data-ng-show="b.heureDebut<='17:00' && b.heureFin>='18:00' && b.dateTmp.getDay() == a && getWeekNumber(b.dateTmp.getTime()) == getWeekNumber(trieDate.getTime()) && (trieType == 0 || ((trieType == 1 && b.idEnseignant == trieIndex) || (trieType == 2 && b.idClasse == trieIndex)))"><span data-ng-show="trieType != 2">{{ classe[b.idClasse].nomClasse }} </span><span data-ng-show="trieType != 1">{{ enseignants[b.idEnseignant].prenomEnseignant }} {{ enseignants[b.idEnseignant].nomEnseignant }} </span>Salle : {{ b.idSalle }}</li></ul>
                     </td>
                 </tr>
             </table>
@@ -122,7 +122,7 @@
                 <div>
                     <label for="classe">Classe</label>
                     <select id="classe" data-ng-model="demande.classe" required>
-                        <option data-ng-repeat="elt in classe|orderBy:'nomClasse'" value="{{$index}}">{{elt.nomClasse}}</option>
+                        <option data-ng-repeat="elt in classe" value="{{$index}}">{{elt.nomClasse}}</option>
                     </select>
                 </div>
                 <div>
@@ -135,11 +135,11 @@
                 </div>
                 <div>
                     <label for="heureDebut">Heure de début</label>
-                    <input type="time" placeholder="HH:MM" id="heureDebut" pattern="\d{2}:{1}[0,30]{2}" data-ng-model="demande.heureDebut" required>
+                    <input type="time" placeholder="HH:MM" id="heureDebut" pattern="\d{2}:{1}0{2}" data-ng-model="demande.heureDebut" required>
                 </div>
                 <div>
                     <label for="heureFin">Heure de fin</label>
-                    <input type="time" placeholder="HH:MM" id="heureFin" pattern="\d{2}:{1}[0,30]{2}" data-ng-model="demande.heureFin" required>
+                    <input type="time" placeholder="HH:MM" id="heureFin" pattern="\d{2}:{1}0{2}" data-ng-model="demande.heureFin" required>
                 </div>
                 <div>
                     <label for="videoProjecteur">Vidéo projecteur</label>

@@ -3,7 +3,7 @@ var app = angular.module("app", []);
 app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $http, $filter) {
 
     // Le code du contrôleur
-    // localStorage.clear();
+    //localStorage.clear();
     $scope.saved = localStorage.getItem('data');
     if(localStorage.getItem('data')!==null)
     {
@@ -62,17 +62,17 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }];
 
     $scope.classe = [{
-        'nomClasse': 'Licence professionnelle Projet Web',
-        'effectifClasse': 25
-    }, {
-        'nomClasse': 'Licence professionnelle ',
-        'effectifClasse': 30
+        'nomClasse': 'BTS SIO',
+        'effectifClasse': 18
     }, {
         'nomClasse': 'Licence Physique',
         'effectifClasse': 28
     }, {
-        'nomClasse': 'BTS SIO',
-        'effectifClasse': 18
+        'nomClasse': 'Licence professionnelle ',
+        'effectifClasse': 30
+    }, {
+        'nomClasse': 'Licence professionnelle Projet Web',
+        'effectifClasse': 25
     }];
 
     /*$scope.cours = [{
@@ -94,17 +94,16 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     $scope.trieType = $scope.trieOptions[0].value;
 
     $scope.ajout = function () {
-
         var idEnseignant = $filter('getEnseignantId')($scope.enseignants, $scope.demande.enseignant);
 
         // Si on veut un retro projecteur
         if ($scope.demande.videoProjecteur)
         {
             // Si le nombre de projecteur est à 0
-            if($scope.videoProjecteur < 1)
+            if($scope.videoProjecteur == 0)
             {
                 // On sort
-                alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout");
+                alert("Il n'y a plus de retro projecteur , merci de revoir la demande d'ajout")
                 return;
             }
             else
@@ -141,11 +140,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             return;
         }
         if (!$scope.demande.heureDebut || !$scope.demande.heureFin) alert("Entrez une heure au format HH:MM exemple '08:00'");
-        if($scope.demande.heureDebut > $scope.demande.heureFin)
-        {
-            alert("L'heure de début du cours est supérieur à la date de fin du cours");
-            return;
-        }
         if (!$scope.demande.date) alert("Entrez une date au format AAAA-MM-JJ exemple '2015-12-25'");
         /*Verif moi et jours*/
 
@@ -157,6 +151,11 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.demande.heureFin.setMonth($scope.demande.date.getMonth());
         $scope.demande.heureFin.setFullYear($scope.demande.date.getFullYear());
 
+        if($scope.demande.heureDebut > $scope.demande.heureFin)
+        {
+            alert("L'heure de début du cours est supérieur à la date de fin du cours");
+            return;
+        }
         console.log($scope.demande.heureDebut);
         dateactuelle = new Date();
         heureDebut = new Date ($scope.demande.heureDebut);
@@ -166,16 +165,17 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
         if(date < dateactuelle)
         {
+
             alert("La date renseignée doit être égale ou supérieur à la date actuelle");
             return;
         }
+
 
         if(heureDebut.getHours() < 9 || heureDebut.getHours() > 18 || heureFin.getHours() < 9 || heureFin.getHours() > 18)
         {
             alert("Les horaires indiquées ne sont pas paramétrés pour des cours");
             return;
         }
-
 
         var heureDebutFormat = heureDebut.getHours();
         if (heureDebut.getHours() < 10) {
@@ -313,13 +313,13 @@ app.filter('existeCours', function () {
                     }
                 }
                 if (oldCours[i].idSalle == newCours.idSalle) {
-                    alert(message + "La salle est déjà réservée.");
+                    alert(message + "La salle est déjà réservée.")
                     return false;
                 } else if (oldCours[i].idEnseignant == newCours.idEnseignant) {
-                    alert(message + "L'enseignant a déjà cours à cette heure là.");
+                    alert(message + "L'enseignant a déjà cours à cette heure là.")
                     return false;
                 } else if (oldCours[i].idClasse == newCours.idClasse) {
-                    alert(message + "Cette classe a déjà cours à cette heure là.");
+                    alert(message + "Cette classe a déjà cours à cette heure là.")
                     return false;
                 }
             }
