@@ -4,6 +4,8 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
     // Le code du contrôleur
     // localStorage.clear();
+ 
+    // Données des cours
     $scope.saved = localStorage.getItem('data');
     if(localStorage.getItem('data')!==null)
     {
@@ -13,6 +15,14 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     {
         $scope.coursSave=[];
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
+    }
+
+    // Données des professeurs
+    if(localStorage.getItem('enseignants')) {
+        $scope.enseignants = JSON.parse(localStorage.getItem('enseignants'));
+    }
+    else {
+        $scope.enseignants = [];
     }
 
     // Si on fait directement new Date(), on aura une date comme "2016-02-14T14:06:25.869Z" alors qu'on veut juste "2016-02-14T00:00:00.000Z"
@@ -40,7 +50,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
     delete dateTmp; // Surpprimer la variable temporaire
 
-    console.log(localStorage.getItem('data'));
     $scope.videoProjecteur = 3;
     $scope.salles = [{
         'effectifSalle':2,
@@ -61,7 +70,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         'effectifSalle':25,
         'idSalle':105
     }];
-    $scope.enseignants = [{
+    /*$scope.enseignants = [{
         'loginEnseignant': 'gchagnon',
         'prenomEnseignant': 'Gilles',
         'nomEnseignant': 'Chagnon'
@@ -77,7 +86,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         'loginEnseignant': 'mlisa',
         'prenomEnseignant': 'Mona',
         'nomEnseignant': 'Lisa'
-    }];
+    }];*/
 
     $scope.classe = [{
         'nomClasse': 'BTS SIO',
@@ -157,7 +166,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
             alert("L'heure de début du cours est supérieur à la date de fin du cours");
             return;
         }
-        console.log($scope.demande.heureDebut);
         dateactuelle = new Date();
         heureDebut = new Date ($scope.demande.heureDebut);
         heureFin = new Date ($scope.demande.heureFin);
@@ -223,10 +231,25 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
          $scope.coursSave[i].dateTmp = undefined;
          }*/
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
-        console.log(localStorage.getItem('data'));
 
         // Détruire cette variable parce que c'est une variable globale pour éviter que d'autres fonctions s'en servent
         delete newCours;
+    }
+
+    // Ajouter un enseignant
+    $scope.newEnseignant = function(d) {        
+        var loginEnseignant = $scope.newEnseignant.prenomEnseignant[0].toLowerCase() + $scope.newEnseignant.nomEnseignant.toLowerCase();
+        // Vérifier que le login n'existe pas déjà
+        if($filter('getEnseignantId')($scope.enseignants, loginEnseignant) != -1) {
+            alert("Cet enseignant existe déjà.");
+            return;
+        }
+        $scope.enseignants.push({
+            'loginEnseignant':loginEnseignant,
+            'prenomEnseignant':$scope.newEnseignant.prenomEnseignant,
+            'nomEnseignant':$scope.newEnseignant.nomEnseignant
+        });
+        localStorage.setItem('enseignants', JSON.stringify($scope.enseignants));
     }
 
     // Obtenir le numéro de la semaine en fonction d'une date
@@ -313,7 +336,6 @@ app.filter('existeCours', function () {
     return function (oldCours, maxVideoProjecteurs) {
         var numVideoProjecteur = 0;
         var message = "";
-        console.log(oldCours.length);
         for (var i = 0; i < oldCours.length; i++) {
             oldCours[i].date = new Date(oldCours[i].date);
 

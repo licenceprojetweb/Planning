@@ -147,6 +147,29 @@
                 </div>
                 <input type="submit" data-ng-click="ajout()">
             </form>
+
+            <div id="enseignants">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td>Login de l'enseignant</td>
+                        <td>Prénom de l'enseignant</td>
+                        <td>Nom de l'enseignant</td>
+                    </tr>
+                    <tr data-ng-repeat="a in enseignants track by $index">
+                        <td>{{ a.loginEnseignant }}</td>
+                        <td>{{ a.prenomEnseignant }}</td>
+                        <td>{{ a.nomEnseignant }}</td>
+                    </tr>
+                </table>
+                <p>Ajouter un enseignant</p>
+                <form>
+                    <label for="prenomEnseignant">Prénom de l'enseignant</label>
+                    <input type="text" data-ng-model="newEnseignant.prenomEnseignant" id="prenomEnseignant"><br>
+                    <label for="nomEnseignant"> Nom de l'enseignant</label>
+                    <input type="text" data-ng-model="newEnseignant.nomEnseignant" id="nomEnseignant"><br>
+                    <input type="submit" data-ng-click="newEnseignant()">
+                </form>
+            </div>
         </div>
     </div>
 </div>
