@@ -93,7 +93,7 @@
 								
 								<div class="form-group">
 									<label class="sr-only" for="date">Date</label>
-									<input type="date" id="date" placeholder="Date, format AAAA-MM-JJ"  class="form-username form-control" data-ng-model="demande.date" required>
+									<input type="date" id="date" placeholder="Date"  class="form-username form-control" data-ng-model="demande.date" required>
 								</div>
 								
 								<div class="form-group">
@@ -149,28 +149,6 @@
 				</footer>
 				
 				<div class="row col-10">
-
-					<table class="table table-bordered table-striped">
-						<tr class="success">
-							<td>Enseignant</td>
-							<td>Classe</td>
-							<td>Salle</td>
-							<td>Date</td>
-							<td>Heure de début</td>
-							<td>Heure de fin</td>
-							<td>Vidéo projecteur</td>
-						</tr>
-						
-						<tr data-ng-repeat="elt in coursSave track by $index">
-							<td>{{enseignants[elt.idEnseignant].prenomEnseignant}} {{enseignants[elt.idEnseignant].nomEnseignant}}</td>
-							<td>{{classe[elt.idClasse].nomClasse}}</td>
-							<td>{{elt.idSalle}}</td>
-							<td>{{elt.date}}</td>
-							<td>{{elt.heureDebut}}</td>
-							<td>{{elt.heureFin}}</td>
-							<td>{{elt.videoProjecteur}}</td>
-						</tr>
-					</table>
 
 					<table class="col-10 table table-bordered table-striped">
 						<tr  class="success">

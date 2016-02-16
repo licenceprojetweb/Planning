@@ -4,7 +4,7 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
 
     // Le code du contrôleur
     // localStorage.clear();
- 
+
     // Données des cours
     $scope.saved = localStorage.getItem('data');
     if(localStorage.getItem('data')!==null)
@@ -16,7 +16,6 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
         $scope.coursSave=[];
         localStorage.setItem('data', JSON.stringify($scope.coursSave));
     }
-
     // Données des professeurs
     if(localStorage.getItem('enseignants')) {
         $scope.enseignants = JSON.parse(localStorage.getItem('enseignants'));
@@ -194,13 +193,13 @@ app.controller("Controleur", ["$scope", "$http", "$filter", function ($scope, $h
     }
 	
 	$scope.deletePlanning = function() {
-       /*console.log("entrée");
        for(var i=0; i<$scope.coursSave.length; i++) {
-        console.log($scope.coursSave[i].dateTmp.getFullYear());
-            if($scope.coursSave[i].dateTmp.getFullYear() == $scope.trieDate.getFullYear()) {
-                console.log("trol");
+            if($scope.getWeekNumber($scope.coursSave[i].dateTmp) == $scope.getWeekNumber($scope.trieDate)) {
+                $scope.coursSave.splice(i, 1);
+                i=0;
             }
-       }*/
+       }
+       localStorage.setItem('data', JSON.stringify($scope.coursSave));
     }
 	
 	$scope.deleteProf = function(index) {
@@ -377,9 +376,7 @@ app.filter('existeCours', function () {
         var numVideoProjecteur = 0;
         var message = "";
         for (var i = 0; i < oldCours.length; i++) {
-            oldCours[i].date = new Date(oldCours[i].date);
-
-            if (oldCours[i].heureDebut == newCours.heureDebut && oldCours[i].heureFin == newCours.heureFin && oldCours[i].dateTmp.getTime() == newCours.dateTmp.getTime()) {
+            if ( ((newCours.heureDebut <= oldCours[i].heureDebut && newCours.heureFin >= oldCours[i].heureFin) || (newCours.heureDebut >= oldCours[i].heureDebut && newCours.heureFin <= oldCours[i].heureFin)) && oldCours[i].dateTmp.getTime() == newCours.dateTmp.getTime()) {
                 if (oldCours[i].videoProjecteur && newCours.videoProjecteur && numVideoProjecteur < maxVideoProjecteurs) {
                     numVideoProjecteur++;
                     if (numVideoProjecteur >= maxVideoProjecteurs) {
